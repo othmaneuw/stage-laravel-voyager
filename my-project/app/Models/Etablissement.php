@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Loisir extends Model
+class Etablissement extends Model
 {
     
 }

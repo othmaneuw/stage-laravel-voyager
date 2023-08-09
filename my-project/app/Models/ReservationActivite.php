@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 
-class Etat extends Model
+class ReservationActivite extends Model
 {
     
 }

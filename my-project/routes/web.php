@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AssuranceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,8 +16,6 @@ use App\Http\Controllers\AssuranceController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/assurance/{id}',[AssuranceController::class,"showOne"]);
 
 
 Route::group(['prefix' => 'admin'], function () {
