@@ -1,9 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Prisesencharge;
-use App\Models\User;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,8 +17,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class PrisesEnChargeController extends VoyagerBaseController
-{
+class SouscriptionAssuranceController extends VoyagerBaseController{
     public function index(Request $request)
     {
         // GET THE SLUG, ex. 'posts', 'pages', etc.
@@ -53,10 +49,10 @@ class PrisesEnChargeController extends VoyagerBaseController
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
 
-            $query = $model::select($dataType->name . '.*');
+            $query = $model::select($dataType->name.'.*');
 
 
-            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope' . ucfirst($dataType->scope))) {
+            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
                 $query->{$dataType->scope}();
             }
 
@@ -75,9 +71,9 @@ class PrisesEnChargeController extends VoyagerBaseController
 
             if ($search->value != '' && $search->key && $search->filter) {
                 $search_filter = ($search->filter == 'equals') ? '=' : 'LIKE';
-                $search_value = ($search->filter == 'equals') ? $search->value : '%' . $search->value . '%';
+                $search_value = ($search->filter == 'equals') ? $search->value : '%'.$search->value.'%';
 
-                $searchField = $dataType->name . '.' . $search->key;
+                $searchField = $dataType->name.'.'.$search->key;
                 if ($row = $this->findSearchableRelationshipRow($dataType->rows->where('type', 'relationship'), $search->key)) {
                     $query->whereIn(
                         $searchField,
@@ -95,12 +91,12 @@ class PrisesEnChargeController extends VoyagerBaseController
                 $querySortOrder = (!empty($sortOrder)) ? $sortOrder : 'desc';
                 if (!empty($row)) {
                     $query->select([
-                        $dataType->name . '.*',
-                        'joined.' . $row->details->label . ' as ' . $orderBy,
+                        $dataType->name.'.*',
+                        'joined.'.$row->details->label.' as '.$orderBy,
                     ])->leftJoin(
-                        $row->details->table . ' as joined',
-                        $dataType->name . '.' . $row->details->column,
-                        'joined.' . $row->details->key
+                        $row->details->table.' as joined',
+                        $dataType->name.'.'.$row->details->column,
+                        'joined.'.$row->details->key
                     );
                 }
 
@@ -125,17 +121,10 @@ class PrisesEnChargeController extends VoyagerBaseController
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($model);
 
-
-        // TODO
         $user = Auth::user();
         if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
         }
-
-        // $user = Auth::user();
-        // echo "<pre>";
-        // var_dump($user["role_id"] !== 1 ? "hello" : "x");
-        // die();
 
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
@@ -205,55 +194,6 @@ class PrisesEnChargeController extends VoyagerBaseController
         ));
     }
 
-    public function create(Request $request)
-    {
-        $slug = $this->getSlug($request);
-
-        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
-
-
-        // Check permission
-        $this->authorize('add', app($dataType->model_name));
-
-        $dataTypeContent = (strlen($dataType->model_name) != 0)
-            ? new $dataType->model_name()
-            : false;
-
-
-        foreach ($dataType->addRows as $key => $row) {
-            $dataType->addRows[$key]['col_width'] = $row->details->width ?? 100;
-        }
-
-        //    TU VOIS CE $DataType->addRows ?????
-
-
-        //echo "<pre>";
-        //var_dump($dataType->addRows->where('display_name', 'Demandeur'));die;
-
-
-        // $dataType->addRows[1]["display_name"] = "hel";
-
-
-
-        // If a column has a relationship associated with it, we do not want to show that field
-        $this->removeRelationshipField($dataType, 'add');
-
-        // Check if BREAD is Translatable
-        $isModelTranslatable = is_bread_translatable($dataTypeContent);
-
-        // Eagerload Relations
-        $this->eagerLoadRelations($dataTypeContent, $dataType, 'add', $isModelTranslatable);
-
-
-        $view = 'voyager::bread.edit-add';
-
-        if (view()->exists("voyager::$slug.edit-add")) {
-            $view = "voyager::$slug.edit-add";
-        }
-
-        return Voyager::view($view, compact('dataType', 'dataTypeContent', 'isModelTranslatable'));
-    }
-
     public function store(Request $request)
     {
         //echo "<pre>";var_dump($user);die;
@@ -303,4 +243,4 @@ class PrisesEnChargeController extends VoyagerBaseController
             return response()->json(['success' => true, 'data' => $data]);
         }
     }
-}
+} 
