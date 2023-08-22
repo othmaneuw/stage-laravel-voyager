@@ -2,9 +2,11 @@
 
 namespace App\Widgets;
 
+use App\Models\Prisesencharge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use TCG\Voyager\Facades\Voyager;
+use TCG\Voyager\Models\Role;
 use TCG\Voyager\Widgets\BaseDimmer;
 
 class PriseEnCharges extends BaseDimmer
@@ -22,8 +24,13 @@ class PriseEnCharges extends BaseDimmer
      */
     public function run()
     {
-        $count = \App\Models\Prisesencharge::count();
-        $string = "Prises En Charges";
+        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id){
+            $result = \App\Models\Prisesencharge::where('statut','submit')->count();
+        }else{
+            $result = \App\Models\Prisesencharge::where('user',Auth::user()->id)->where('statut','submit')->count();
+        }
+        $count = $result;
+        $string = "Prises En Charges Médicales en attente";
 
         return view('voyager::dimmer', array_merge($this->config, [
             'icon'   => 'voyager-treasure',
@@ -33,7 +40,7 @@ class PriseEnCharges extends BaseDimmer
                 'text' => 'Prises En Charge Médicales',
                 'link' => route('voyager.prisesencharges.index'),
             ],
-            'image' => '/prisesencharge-bg.jpg',
+            'image' => '/med2.jpg',
         ]));
     }
 
@@ -44,6 +51,6 @@ class PriseEnCharges extends BaseDimmer
      */
     public function shouldBeDisplayed()
     {
-        return Auth::user()->can('browse', Voyager::model('Post'));
+        return Auth::user()->can('browse', new Prisesencharge());
     }
 }

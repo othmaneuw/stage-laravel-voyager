@@ -257,6 +257,7 @@ class PrisesEnChargeController extends VoyagerBaseController
     public function store(Request $request)
     {
         //echo "<pre>";var_dump($user);die;
+        //HERE
         if(Auth::user()['role_id'] !== Role::where('name','admin')->get()->first()->id){
             $request->merge(['user'=> Auth::user()['id'] ]);
         }
