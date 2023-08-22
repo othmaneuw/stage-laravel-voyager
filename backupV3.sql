@@ -870,7 +870,7 @@ CREATE TABLE `prisesencharges` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `test` varchar(255) DEFAULT 'TEST',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -879,7 +879,7 @@ CREATE TABLE `prisesencharges` (
 
 LOCK TABLES `prisesencharges` WRITE;
 /*!40000 ALTER TABLE `prisesencharges` DISABLE KEYS */;
-INSERT INTO `prisesencharges` VALUES (40,3,4,NULL,'[]','2023-08-20 12:28:01','2023-08-20 12:28:01','Moi meme','submit',NULL,12,NULL,NULL,'TEST'),(41,3,2,NULL,'[]','2023-08-20 12:37:40','2023-08-20 12:37:40','Moi','submit',NULL,12,NULL,NULL,'TEST');
+INSERT INTO `prisesencharges` VALUES (40,3,4,NULL,'[]','2023-08-20 12:28:01','2023-08-20 12:28:01','Moi meme','submit',NULL,12,NULL,NULL,'TEST'),(41,3,2,NULL,'[]','2023-08-20 12:37:40','2023-08-20 12:37:40','Moi','submit',NULL,12,NULL,NULL,'TEST'),(42,1,3,'hello','[]','2023-08-22 09:59:28','2023-08-22 09:59:28','Moi','submit',NULL,12,NULL,NULL,'TEST');
 /*!40000 ALTER TABLE `prisesencharges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -996,7 +996,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'site.title','Site Title','AOS - Tamwilcom','','text',1,'Site'),(2,'site.description','Site Description','Association des Oeuvres Sociales de TAMWILCOM','','text',2,'Site'),(3,'site.logo','Site Logo','','','image',3,'Site'),(4,'site.google_analytics_tracking_id','Google Analytics Tracking ID',NULL,'','text',4,'Site'),(5,'admin.bg_image','Admin Background Image','settings/August2023/Du7stZLNMgqoixgMopXh.jfif','','image',5,'Admin'),(6,'admin.title','Admin Title','AOS TAMWILCOM','','text',1,'Admin'),(7,'admin.description','Admin Description','Association des Oeuvres Sociales de TAMWILCOM','','text',2,'Admin'),(8,'admin.loader','Admin Loader','','','image',3,'Admin'),(9,'admin.icon_image','Admin Icon Image','','','image',4,'Admin'),(10,'admin.google_analytics_client_id','Google Analytics Client ID (used for admin dashboard)',NULL,'','text',1,'Admin');
+INSERT INTO `settings` VALUES (1,'site.title','Site Title','AOS - Tamwilcom','','text',1,'Site'),(2,'site.description','Site Description','Association des Oeuvres Sociales de TAMWILCOM','','text',2,'Site'),(3,'site.logo','Site Logo','','','image',3,'Site'),(4,'site.google_analytics_tracking_id','Google Analytics Tracking ID',NULL,'','text',4,'Site'),(5,'admin.bg_image','Admin Background Image','settings/August2023/GEXPllB7nGxFjWgZvai4.jfif','','image',5,'Admin'),(6,'admin.title','Admin Title','AOS TAMWILCOM','','text',1,'Admin'),(7,'admin.description','Admin Description','Association des Oeuvres Sociales de TAMWILCOM','','text',2,'Admin'),(8,'admin.loader','Admin Loader','','','image',3,'Admin'),(9,'admin.icon_image','Admin Icon Image','','','image',4,'Admin'),(10,'admin.google_analytics_client_id','Google Analytics Client ID (used for admin dashboard)',NULL,'','text',1,'Admin');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2071,4 +2071,4 @@ USE `test`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-20 14:15:25
+-- Dump completed on 2023-08-22 10:17:38
