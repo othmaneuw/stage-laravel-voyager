@@ -24,10 +24,10 @@ class PriseEnCharges extends BaseDimmer
      */
     public function run()
     {
-        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id){
-            $result = \App\Models\Prisesencharge::where('statut','submit')->count();
-        }else{
-            $result = \App\Models\Prisesencharge::where('user',Auth::user()->id)->where('statut','submit')->count();
+        if (Auth::user()['role_id'] == Role::where('name', 'admin')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Admin AOS')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Gestionnaire AOS')->get()->first()->id) {
+            $result = \App\Models\Prisesencharge::where('statut', 'submit')->count();
+        } else {
+            $result = \App\Models\Prisesencharge::where('user', Auth::user()->id)->where('statut', 'submit')->count();
         }
         $count = $result;
         $string = "Prises En Charges Médicales en attente";

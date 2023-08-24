@@ -2,7 +2,10 @@
     use TCG\Voyager\Models\Role;
 @endphp
 
-@if (Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id)
+@if (Auth::user()['role_id'] ==
+        Role::where('name', 'admin')->get()->first()->id ||
+        Auth::user()['role_id'] ==
+            Role::where('name', 'Admin AOS')->get()->first()->id)
 
     @if (isset($options->model) && isset($options->type))
 

@@ -258,8 +258,8 @@ class PrisesEnChargeController extends VoyagerBaseController
     {
         //echo "<pre>";var_dump($user);die;
         //HERE
-        if(Auth::user()['role_id'] !== Role::where('name','admin')->get()->first()->id){
-            $request->merge(['user'=> Auth::user()['id'] ]);
+        if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
+            $request->merge(['user' => Auth::user()['id']]);
         }
         $slug = $this->getSlug($request);
 
@@ -268,14 +268,14 @@ class PrisesEnChargeController extends VoyagerBaseController
         // Check permission
         $this->authorize('add', app($dataType->model_name));
 
-        
+
         //$request->all()["user"] = "4";
         // $request->set('user',"4");
         // var_dump($request->all());die;
 
         // Validate fields with ajax
         $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
-        
+
         // ce que j'essaie de faire ici c'est de remplacer le demandeur par note user connecté
         // $user = Auth::user();
         // $userToSave = $dataType->addRows->where('display_name', 'Demandeur')->first();
@@ -297,7 +297,7 @@ class PrisesEnChargeController extends VoyagerBaseController
             }
 
             return $redirect->with([
-                'message'    => __('voyager::generic.successfully_added_new')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+                'message'    => __('voyager::generic.successfully_added_new') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
                 'alert-type' => 'success',
             ]);
         } else {

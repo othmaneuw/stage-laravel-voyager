@@ -24,13 +24,13 @@ class Loisirs extends BaseDimmer
      */
     public function run()
     {
-        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id){
+        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id|| Auth::user()['role_id'] == Role::where('name', 'Admin AOS')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Gestionnaire AOS')->get()->first()->id){
             $result = \App\Models\ReservationActivite::where('statut','submit')->count();
         }else{
             $result = \App\Models\ReservationActivite::where('user',Auth::user()->id)->where('statut','submit')->count();
         }
         $count = $result;
-        $string = "Réservation d'activités en attente";
+        $string = "Réservations d'activités en attente";
 
         return view('voyager::dimmer', array_merge($this->config, [
             'icon'   => 'voyager-news',
