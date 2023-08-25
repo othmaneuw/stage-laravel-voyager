@@ -27,6 +27,7 @@ class PrisesEnChargeController extends VoyagerBaseController
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
+
         // GET THE DataType based on the slug
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
@@ -130,7 +131,18 @@ class PrisesEnChargeController extends VoyagerBaseController
         $user = Auth::user();
         if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
+            // echo "<pre>";
+            // var_dump($dataTypeContent);
+            // die;
         }
+
+        //Pour le filtrage des demandes par rapport au statut
+        if($request->query->has('selected')){
+            if($request->query->get('selected') !== "all"){
+                $dataTypeContent = $dataTypeContent->where('statut',$request->query->get("selected"));
+            }
+        }
+
 
         // $user = Auth::user();
         // echo "<pre>";
