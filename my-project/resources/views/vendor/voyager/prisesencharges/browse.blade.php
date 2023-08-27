@@ -18,18 +18,20 @@
         @php
             $statuts = DB::table('statuts')->get();
         @endphp
-        <div style="display: flex">
+        <div style="display: flex;gap:5px;">
             <h4 style="margin-right: 20px;font-weight:bold">Filtrer par etat</h4>
             <select style="padding: 0 5px" id="select-filter">
-                <option value="all">Toutes les demandes</option>
+                <option value="all"  >Toutes les demandes</option>
                 @foreach($statuts as $statut)
                     <option class="options-select" value="{{$statut->display_name}}" > {{$statut->nom}} </option>
                 @endforeach
             </select>
+            <button id="btn-filter" style="border: none;background-color:dodgerBlue;color:white;font-weight:bold"> Filtrer </button>
         </div>
         <script>
-            const selectElement = document.getElementById("select-filter");
             const options = document.getElementsByClassName('options-select');
+            const btn = document.getElementById('btn-filter');
+            console.log(btn);
             const searchParams = new URLSearchParams(window.location.search);
             const selectedValue = searchParams.get('selected');
             for(let i=0;i<options.length;i++){
@@ -37,8 +39,9 @@
                     options[i].setAttribute('selected',true);
                 }
             }
-            selectElement.addEventListener('change',function handleChange(event){
-                  window.location.replace(`http://localhost:8000/admin/prisesencharges?selected=${event.target.value}`);
+            btn.addEventListener('click',function handleClick(event){
+                  const selectElement = document.getElementById('select-filter');
+                  window.location.replace(`http://localhost:8000/admin/prisesencharges?selected=${selectElement.value}`);
             })
         </script>
         @can('edit', app($dataType->model_name))
