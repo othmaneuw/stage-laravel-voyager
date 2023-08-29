@@ -18,7 +18,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class FacturationsController extends VoyagerBaseController{
+class AppartFacturationController extends VoyagerBaseController{
 
     public function index(Request $request)
     {

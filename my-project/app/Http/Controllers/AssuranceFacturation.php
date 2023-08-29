@@ -18,7 +18,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class FacturationsController extends VoyagerBaseController{
+class AssuranceFacturation extends VoyagerBaseController{
 
     public function index(Request $request)
     {
@@ -198,7 +198,6 @@ class FacturationsController extends VoyagerBaseController{
             'showCheckboxColumn'
         ));
     }
-
 
     public function store(Request $request)
     {
