@@ -126,6 +126,13 @@ class ReserverActiviteController extends VoyagerBaseController{
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
         }
 
+        //Pour le filtrage des demandes par rapport au statut
+        if($request->query->has('selected')){
+            if($request->query->get('selected') !== "all"){
+                $dataTypeContent = $dataTypeContent->where('statut',$request->query->get("selected"));
+            }
+        }
+
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
 

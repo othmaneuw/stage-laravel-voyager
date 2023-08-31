@@ -8,4 +8,7 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    development : {
+        baseUrl : 'http://localhost:8000/admin'
+    }
 });

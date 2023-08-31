@@ -126,6 +126,13 @@ class SouscriptionAssuranceController extends VoyagerBaseController{
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
         }
 
+         //Pour le filtrage des demandes par rapport au statut
+         if($request->query->has('selected')){
+            if($request->query->get('selected') !== "all"){
+                $dataTypeContent = $dataTypeContent->where('statut',$request->query->get("selected"));
+            }
+        }
+
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
 
@@ -200,6 +207,7 @@ class SouscriptionAssuranceController extends VoyagerBaseController{
         if(Auth::user()['role_id'] !== Role::where('name','admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id){
             $request->merge(['user'=> Auth::user()['id'] ]);
         }
+        
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();

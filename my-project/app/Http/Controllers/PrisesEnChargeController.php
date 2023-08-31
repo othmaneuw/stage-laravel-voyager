@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Rejection;
 use App\Models\Prisesencharge;
 use App\Models\User;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -24,6 +26,11 @@ class PrisesEnChargeController extends VoyagerBaseController
 {
     public function index(Request $request)
     {
+        //Mail::to($user->email)->send(new WelcomeEmail($user->name));
+        Mail::to($request->user())
+         ->cc("strangeothmane@gmail.com")
+         ->bcc("oelkhemmar@gmail.com")
+         ->queue(new Rejection());
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
@@ -127,7 +134,7 @@ class PrisesEnChargeController extends VoyagerBaseController
         $isModelTranslatable = is_bread_translatable($model);
 
 
-        // TODO
+        // si il est admin il voit tout sinon il voit ses propres demandes
         $user = Auth::user();
         if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
@@ -315,5 +322,61 @@ class PrisesEnChargeController extends VoyagerBaseController
         } else {
             return response()->json(['success' => true, 'data' => $data]);
         }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $slug = $this->getSlug($request);
+
+         //Recuperer le statut de la demande de prise en charge concerné depuis la BD
+        // $prise_en_charge = Prisesencharge::where('id',$id)->get();
+        // echo "<pre>";var_dump($prise_en_charge);die;
+
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+
+        // Compatibility with Model binding.
+        $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
+
+        $model = app($dataType->model_name);
+        $query = $model->query();
+        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
+            $query = $query->{$dataType->scope}();
+        }
+        if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
+            $query = $query->withTrashed();
+        }
+
+        $data = $query->findOrFail($id);
+
+        // Check permission
+        $this->authorize('edit', $data);
+
+        // Validate fields with ajax
+        $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
+
+        // Get fields with images to remove before updating and make a copy of $data
+        $to_remove = $dataType->editRows->where('type', 'image')
+            ->filter(function ($item, $key) use ($request) {
+                return $request->hasFile($item->field);
+            });
+        $original_data = clone($data);
+
+        $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
+
+        // Delete Images
+        $this->deleteBreadImages($original_data, $to_remove);
+
+        event(new BreadDataUpdated($dataType, $data));
+
+        if (auth()->user()->can('browse', app($dataType->model_name))) {
+            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+        } else {
+            $redirect = redirect()->back();
+        }
+
+        return $redirect->with([
+            'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'alert-type' => 'success',
+        ]);
     }
 }

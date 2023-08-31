@@ -26,3 +26,8 @@ services:
       - './my-project:/app'
     depends_on:
       - mariadb
+  mailer:
+    image: dockage/mailcatcher:latest
+    ports:
+      - '1080:1080'
+      - '1025:1025'

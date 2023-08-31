@@ -40,7 +40,9 @@
                 }
             }
             btn.addEventListener('click',function handleClick(event){
+                   // TODO : dynamiser l'URL
                   const selectElement = document.getElementById('select-filter');
+                  btn.innerText = "...Chargement";
                   window.location.replace(`http://localhost:8000/admin/prisesencharges?selected=${selectElement.value}`);
             })
         </script>
