@@ -329,8 +329,9 @@ class PrisesEnChargeController extends VoyagerBaseController
     {
         $slug = $this->getSlug($request);
 
-         //Recuperer le statut de la demande de prise en charge concerné depuis la BD
+         //Envoi d'un email a l'adhérent dans le cas de validation ou refus de la demande 
         $prise_en_charge_statut = DB::table('prisesencharges')->where('id',$id)->get()->first()->statut;
+        $reservation_date = DB::table('prisesencharges')->where('id',$id)->get()->first()->created_at;
         $updated_value = $request->request->get('statut');
         $user = DB::table('users')->where('id',$request->request->get('user'))->get()->first(); 
         $etablissement = DB::table('etablissements')->where('id',$request->request->get('etablissement'))->first();
@@ -340,9 +341,9 @@ class PrisesEnChargeController extends VoyagerBaseController
         $user_name = $user->name;
         if($prise_en_charge_statut !== $updated_value){
             if($updated_value == "refused"){
-                Mail::to($user_email)->send(new Rejection($user_name,$etablissement_name));
+                Mail::to($user_email)->send(new Rejection($user_name,$etablissement_name,$reservation_date));
             }else if($updated_value == "Validated"){
-                Mail::to($user_email)->send(new Validation($user_name,$etablissement_name));
+                Mail::to($user_email)->send(new Validation($user_name,$etablissement_name,$reservation_date));
             }
         }
 

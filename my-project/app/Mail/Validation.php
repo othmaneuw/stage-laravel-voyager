@@ -20,7 +20,7 @@ class Validation extends Mailable
      *
      * @return void
      */
-    public function __construct(public String $user_name,public String $etablissement_name)
+    public function __construct(public String $user_name,public String $etablissement_name,public $date)
     {
         //
         

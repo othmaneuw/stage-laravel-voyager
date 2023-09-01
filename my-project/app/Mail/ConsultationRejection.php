@@ -3,14 +3,13 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class Rejection extends Mailable
+class ConsultationRejection extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +18,7 @@ class Rejection extends Mailable
      *
      * @return void
      */
-    public function __construct(public String $user_name,public String $etablissement_name,public $date)
+    public function __construct(public String $user_name,public $date)
     {
         //
     }
@@ -32,8 +31,7 @@ class Rejection extends Mailable
     public function envelope()
     {
         return new Envelope(
-            //from: new Address("elkhemmarothmane@gmail.com","Othmane EL KHEMMAR"),
-            subject: 'Rejection',
+            subject: 'Consultation Rejection',
         );
     }
 
@@ -45,7 +43,7 @@ class Rejection extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.rejection',
+            view: 'email.consultation_rejection',
         );
     }
 

@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body style="background-color: gray;color:white;font-weight:bold;text-align:center;margin-top:50px">
-     Bonjour {{$user_name}} Votre Demande chez {{$etablissement_name}} le {{$date}} a été acceptée 
+    Bonjour {{$user_name}} votre demande pour un medecin de travail le {{$date}} a été refusée .
 </body>
 </html>

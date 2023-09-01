@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body style="background-color: gray;color:white;font-weight:bold;text-align:center;margin-top:50px">
-    Bonjour {{$user_name}} Votre Demande Chez {{$etablissement_name}} a été refué
+    Bonjour {{$user_name}} Votre Demande Chez {{$etablissement_name}} le {{$date}} a été refusée
 </body>
 </html>

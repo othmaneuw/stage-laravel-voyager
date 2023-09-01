@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Mail\Rejection;
+use App\Mail\Validation;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -250,4 +254,77 @@ class EstivageAppartController extends VoyagerBaseController{
             return response()->json(['success' => true, 'data' => $data]);
         }
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $slug = $this->getSlug($request);
+
+         //Envoi d'un email a l'adhérent dans le cas de validation ou refus de la demande 
+        $reservation_statut = DB::table('estivageapparts')->where('id',$id)->get()->first()->statut;
+        $reservation_date = DB::table('estivageapparts')->where('id',$id)->get()->first()->created_at;
+        $updated_value = $request->request->get('statut');
+        $user = DB::table('users')->where('id',$request->request->get('user'))->get()->first(); 
+        $appartement = DB::table('apparts')->where('id',$request->request->get('appart'))->first();
+        $appartement_name = $appartement->nom;
+        //echo "<pre>";var_dump($request);die;
+        $user_email = $user->email;
+        $user_name = $user->name;
+        if($reservation_statut !== $updated_value){
+            if($updated_value == "refused"){
+                Mail::to($user_email)->send(new Rejection($user_name,$appartement_name,$reservation_date));
+            }else if($updated_value == "Validated"){
+                Mail::to($user_email)->send(new Validation($user_name,$appartement_name,$reservation_date));
+            }
+        }
+
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+
+        // Compatibility with Model binding.
+        $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
+
+        $model = app($dataType->model_name);
+        $query = $model->query();
+        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
+            $query = $query->{$dataType->scope}();
+        }
+        if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
+            $query = $query->withTrashed();
+        }
+
+        $data = $query->findOrFail($id);
+
+        // Check permission
+        $this->authorize('edit', $data);
+
+        // Validate fields with ajax
+        $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
+
+        // Get fields with images to remove before updating and make a copy of $data
+        $to_remove = $dataType->editRows->where('type', 'image')
+            ->filter(function ($item, $key) use ($request) {
+                return $request->hasFile($item->field);
+            });
+        $original_data = clone($data);
+
+        $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
+
+        // Delete Images
+        $this->deleteBreadImages($original_data, $to_remove);
+
+        event(new BreadDataUpdated($dataType, $data));
+
+        if (auth()->user()->can('browse', app($dataType->model_name))) {
+            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+        } else {
+            $redirect = redirect()->back();
+        }
+
+        return $redirect->with([
+            'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'alert-type' => 'success',
+        ]);
+    }
+
+
 } 
