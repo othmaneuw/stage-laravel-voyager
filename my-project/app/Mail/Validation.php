@@ -2,15 +2,16 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use PhpParser\Node\Expr\Cast\String_;
 
-class Rejection extends Mailable
+class Validation extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -22,6 +23,7 @@ class Rejection extends Mailable
     public function __construct(public String $user_name,public String $etablissement_name)
     {
         //
+        
     }
 
     /**
@@ -32,8 +34,7 @@ class Rejection extends Mailable
     public function envelope()
     {
         return new Envelope(
-            //from: new Address("elkhemmarothmane@gmail.com","Othmane EL KHEMMAR"),
-            subject: 'Rejection',
+            subject: 'Validation',
         );
     }
 
@@ -45,7 +46,7 @@ class Rejection extends Mailable
     public function content()
     {
         return new Content(
-            view: 'email.rejection',
+            view: 'email.validation',
         );
     }
 

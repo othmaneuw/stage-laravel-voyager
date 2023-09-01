@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Rejection;
+use App\Mail\Validation;
 use App\Models\Prisesencharge;
 use App\Models\User;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
@@ -27,10 +28,10 @@ class PrisesEnChargeController extends VoyagerBaseController
     public function index(Request $request)
     {
         //Mail::to($user->email)->send(new WelcomeEmail($user->name));
-        Mail::to($request->user())
-         ->cc("strangeothmane@gmail.com")
-         ->bcc("oelkhemmar@gmail.com")
-         ->queue(new Rejection());
+        // Mail::to($request->user())
+        //  ->cc("strangeothmane@gmail.com")
+        //  ->bcc("oelkhemmar@gmail.com")
+        //  ->queue(new Rejection());
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
 
@@ -276,7 +277,7 @@ class PrisesEnChargeController extends VoyagerBaseController
     public function store(Request $request)
     {
         //echo "<pre>";var_dump($user);die;
-        //HERE
+        // la nouvelle demande est sauvegardé avec l'utilisateur connecté en tant que demandeur s'il n'est pas admin
         if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
             $request->merge(['user' => Auth::user()['id']]);
         }
@@ -329,8 +330,21 @@ class PrisesEnChargeController extends VoyagerBaseController
         $slug = $this->getSlug($request);
 
          //Recuperer le statut de la demande de prise en charge concerné depuis la BD
-        // $prise_en_charge = Prisesencharge::where('id',$id)->get();
-        // echo "<pre>";var_dump($prise_en_charge);die;
+        $prise_en_charge_statut = DB::table('prisesencharges')->where('id',$id)->get()->first()->statut;
+        $updated_value = $request->request->get('statut');
+        $user = DB::table('users')->where('id',$request->request->get('user'))->get()->first(); 
+        $etablissement = DB::table('etablissements')->where('id',$request->request->get('etablissement'))->first();
+        $etablissement_name = $etablissement->nom;
+        //echo "<pre>";var_dump($request);die;
+        $user_email = $user->email;
+        $user_name = $user->name;
+        if($prise_en_charge_statut !== $updated_value){
+            if($updated_value == "refused"){
+                Mail::to($user_email)->send(new Rejection($user_name,$etablissement_name));
+            }else if($updated_value == "Validated"){
+                Mail::to($user_email)->send(new Validation($user_name,$etablissement_name));
+            }
+        }
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
