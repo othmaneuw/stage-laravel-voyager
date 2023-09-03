@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NouvelleDemande;
 use App\Mail\Rejection;
 use App\Mail\Validation;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
@@ -275,6 +276,8 @@ class SouscriptionAssuranceController extends VoyagerBaseController{
                 Mail::to($user_email)->send(new Rejection($user_name,$assurance_name,$reservation_date));
             }else if($updated_value == "Validated"){
                 Mail::to($user_email)->send(new Validation($user_name,$assurance_name,$reservation_date));
+                $assurance_email = $assurance->email;
+                Mail::to($assurance_email)->send(new NouvelleDemande($user_name,$reservation_date));
             }
         }
 

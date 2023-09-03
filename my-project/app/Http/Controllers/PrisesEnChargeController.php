@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NouvelleDemande;
 use App\Mail\Rejection;
 use App\Mail\Validation;
 use App\Models\Prisesencharge;
@@ -145,9 +146,9 @@ class PrisesEnChargeController extends VoyagerBaseController
         }
 
         //Pour le filtrage des demandes par rapport au statut
-        if($request->query->has('selected')){
-            if($request->query->get('selected') !== "all"){
-                $dataTypeContent = $dataTypeContent->where('statut',$request->query->get("selected"));
+        if ($request->query->has('selected')) {
+            if ($request->query->get('selected') !== "all") {
+                $dataTypeContent = $dataTypeContent->where('statut', $request->query->get("selected"));
             }
         }
 
@@ -281,6 +282,15 @@ class PrisesEnChargeController extends VoyagerBaseController
         if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
             $request->merge(['user' => Auth::user()['id']]);
         }
+
+        //Envoi d'un email a l'etablissement concerné
+        // $etablissement = DB::table('etablissements')->where('id', $request->request->get('etablissement'))->get()->first();
+        // $etablissement_email = $etablissement->email;
+        // $date = $etablissement->created_at;
+        // $user = DB::table('users')->where('id',$request->request->get('user'))->get()->first();
+        // $user_name = $user->name;
+        // Mail::to($etablissement_email)->send(new NouvelleDemande($user_name,$date));
+
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -329,21 +339,23 @@ class PrisesEnChargeController extends VoyagerBaseController
     {
         $slug = $this->getSlug($request);
 
-         //Envoi d'un email a l'adhérent dans le cas de validation ou refus de la demande 
-        $prise_en_charge_statut = DB::table('prisesencharges')->where('id',$id)->get()->first()->statut;
-        $reservation_date = DB::table('prisesencharges')->where('id',$id)->get()->first()->created_at;
+        //Envoi d'un email a l'adhérent dans le cas de validation ou refus de la demande 
+        $prise_en_charge_statut = DB::table('prisesencharges')->where('id', $id)->get()->first()->statut;
+        $reservation_date = DB::table('prisesencharges')->where('id', $id)->get()->first()->created_at;
         $updated_value = $request->request->get('statut');
-        $user = DB::table('users')->where('id',$request->request->get('user'))->get()->first(); 
-        $etablissement = DB::table('etablissements')->where('id',$request->request->get('etablissement'))->first();
+        $user = DB::table('users')->where('id', $request->request->get('user'))->get()->first();
+        $etablissement = DB::table('etablissements')->where('id', $request->request->get('etablissement'))->first();
         $etablissement_name = $etablissement->nom;
         //echo "<pre>";var_dump($request);die;
         $user_email = $user->email;
         $user_name = $user->name;
-        if($prise_en_charge_statut !== $updated_value){
-            if($updated_value == "refused"){
-                Mail::to($user_email)->send(new Rejection($user_name,$etablissement_name,$reservation_date));
-            }else if($updated_value == "Validated"){
-                Mail::to($user_email)->send(new Validation($user_name,$etablissement_name,$reservation_date));
+        if ($prise_en_charge_statut !== $updated_value) {
+            if ($updated_value == "refused") {
+                Mail::to($user_email)->send(new Rejection($user_name, $etablissement_name, $reservation_date));
+            } else if ($updated_value == "Validated") {
+                Mail::to($user_email)->send(new Validation($user_name, $etablissement_name, $reservation_date));
+                $etablissement_email = $etablissement->email;
+                Mail::to($etablissement_email)->send(new NouvelleDemande($user_name, $reservation_date));
             }
         }
 
@@ -354,7 +366,7 @@ class PrisesEnChargeController extends VoyagerBaseController
 
         $model = app($dataType->model_name);
         $query = $model->query();
-        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
+        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope' . ucfirst($dataType->scope))) {
             $query = $query->{$dataType->scope}();
         }
         if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
@@ -374,7 +386,7 @@ class PrisesEnChargeController extends VoyagerBaseController
             ->filter(function ($item, $key) use ($request) {
                 return $request->hasFile($item->field);
             });
-        $original_data = clone($data);
+        $original_data = clone ($data);
 
         $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
 
@@ -390,8 +402,9 @@ class PrisesEnChargeController extends VoyagerBaseController
         }
 
         return $redirect->with([
-            'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'message'    => __('voyager::generic.successfully_updated') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
             'alert-type' => 'success',
         ]);
     }
+
 }

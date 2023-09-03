@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appartfacturation;
+use App\Models\Assurancefacturation;
+use App\Models\Facturation;
+use App\Models\Loisirsfacturation;
+use App\Models\Loisirsremboursement;
+use App\Models\Remboursementappartement;
+use App\Models\Remboursementassurance;
+use App\Models\Remboursementprisesencharge;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
@@ -18,7 +27,8 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class AppartFacturationController extends VoyagerBaseController{
+class AppartFacturationController extends VoyagerBaseController
+{
 
     public function index(Request $request)
     {
@@ -51,10 +61,10 @@ class AppartFacturationController extends VoyagerBaseController{
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
 
-            $query = $model::select($dataType->name.'.*');
+            $query = $model::select($dataType->name . '.*');
 
 
-            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
+            if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope' . ucfirst($dataType->scope))) {
                 $query->{$dataType->scope}();
             }
 
@@ -73,9 +83,9 @@ class AppartFacturationController extends VoyagerBaseController{
 
             if ($search->value != '' && $search->key && $search->filter) {
                 $search_filter = ($search->filter == 'equals') ? '=' : 'LIKE';
-                $search_value = ($search->filter == 'equals') ? $search->value : '%'.$search->value.'%';
+                $search_value = ($search->filter == 'equals') ? $search->value : '%' . $search->value . '%';
 
-                $searchField = $dataType->name.'.'.$search->key;
+                $searchField = $dataType->name . '.' . $search->key;
                 if ($row = $this->findSearchableRelationshipRow($dataType->rows->where('type', 'relationship'), $search->key)) {
                     $query->whereIn(
                         $searchField,
@@ -93,12 +103,12 @@ class AppartFacturationController extends VoyagerBaseController{
                 $querySortOrder = (!empty($sortOrder)) ? $sortOrder : 'desc';
                 if (!empty($row)) {
                     $query->select([
-                        $dataType->name.'.*',
-                        'joined.'.$row->details->label.' as '.$orderBy,
+                        $dataType->name . '.*',
+                        'joined.' . $row->details->label . ' as ' . $orderBy,
                     ])->leftJoin(
-                        $row->details->table.' as joined',
-                        $dataType->name.'.'.$row->details->column,
-                        'joined.'.$row->details->key
+                        $row->details->table . ' as joined',
+                        $dataType->name . '.' . $row->details->column,
+                        'joined.' . $row->details->key
                     );
                 }
 
@@ -123,13 +133,13 @@ class AppartFacturationController extends VoyagerBaseController{
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($model);
 
-        $user = Auth::user();
-        if ($user["role_id"] !== Role::where('name','admin')->get()->first()->id && $user["role_id"] !== Role::where('name','Admin AOS')->get()->first()->id && $user["role_id"] !== Role::where('name','Gestionnaire AOS')->get()->first()->id) {
-            $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
-            // echo "<pre>";
-            // var_dump($dataTypeContent);
-            // die;
-        }
+        // $user = Auth::user();
+        // if ($user["role_id"] !== Role::where('name', 'admin')->get()->first()->id && $user["role_id"] !== Role::where('name', 'Admin AOS')->get()->first()->id && $user["role_id"] !== Role::where('name', 'Gestionnaire AOS')->get()->first()->id) {
+        //     $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
+        //     // echo "<pre>";
+        //     // var_dump($dataTypeContent);
+        //     // die;
+        // }
 
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
@@ -204,9 +214,10 @@ class AppartFacturationController extends VoyagerBaseController{
     {
         //echo "<pre>";var_dump($user);die;
         //HERE
-        if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
-            $request->merge(['user' => Auth::user()['id']]);
-        }
+        // if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
+        //     $request->merge(['user' => Auth::user()['id']]);
+        // }
+
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -231,9 +242,12 @@ class AppartFacturationController extends VoyagerBaseController{
 
 
         $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
-        //echo "<pre>"; var_dump($dataType->addRows->where('display_name',"Demandeur"));die;
+        //echo "<pre>"; var_dump($data->etablissement);die;
 
         event(new BreadDataAdded($dataType, $data));
+
+        //Creer remboursement
+        $this->createRemboursement($data);
 
         if (!$request->has('_tagging')) {
             if (auth()->user()->can('browse', $data)) {
@@ -251,4 +265,28 @@ class AppartFacturationController extends VoyagerBaseController{
         }
     }
 
+    //Fonction de creation de remboursement
+    private function createRemboursement(Appartfacturation $facture)
+    {
+        $id = $facture->id;
+        $date_reglement = $facture->date;
+        $appart = $facture->appartement;
+        $numero_facture = $facture->numerofacture;
+        $date_facture = $facture->datefacture;
+        $montant = $facture->montant;
+        $user = $facture->user;
+        $remboursement = new Remboursementappartement();
+        $remboursement->montant = $montant;
+        $remboursement->periodicite = 12;
+        $remboursement->facture = $id;
+        $remboursement->demandeur = (int)$user;
+        $remboursement->statut = "submit";
+        $remboursement->created_at = date("Y-m-d");
+        $remboursement->appart = $appart;
+
+        // var_dump($user);die;
+        $remboursement->save();
+
+        
+    }
 }

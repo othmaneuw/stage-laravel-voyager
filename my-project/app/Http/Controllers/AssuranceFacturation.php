@@ -18,7 +18,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class AssuranceFacturation extends VoyagerBaseController{
+class AssuranceFacturationController extends VoyagerBaseController{
 
     public function index(Request $request)
     {
@@ -123,13 +123,13 @@ class AssuranceFacturation extends VoyagerBaseController{
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($model);
 
-        $user = Auth::user();
-        if ($user["role_id"] !== Role::where('name','admin')->get()->first()->id && $user["role_id"] !== Role::where('name','Admin AOS')->get()->first()->id && $user["role_id"] !== Role::where('name','Gestionnaire AOS')->get()->first()->id) {
-            $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
-            // echo "<pre>";
-            // var_dump($dataTypeContent);
-            // die;
-        }
+        // $user = Auth::user();
+        // if ($user["role_id"] !== Role::where('name','admin')->get()->first()->id && $user["role_id"] !== Role::where('name','Admin AOS')->get()->first()->id && $user["role_id"] !== Role::where('name','Gestionnaire AOS')->get()->first()->id) {
+        //     $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
+        //     // echo "<pre>";
+        //     // var_dump($dataTypeContent);
+        //     // die;
+        // }
 
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
@@ -203,9 +203,9 @@ class AssuranceFacturation extends VoyagerBaseController{
     {
         //echo "<pre>";var_dump($user);die;
         //HERE
-        if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
-            $request->merge(['user' => Auth::user()['id']]);
-        }
+        // if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
+        //     $request->merge(['user' => Auth::user()['id']]);
+        // }
         $slug = $this->getSlug($request);
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();

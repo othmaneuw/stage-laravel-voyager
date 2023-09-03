@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Facturation;
-use App\Models\Remboursementprisesencharge;
-use TCG\Voyager\Http\Controllers\VoyagerBaseController;
+use App\Mail\NouvelleDemande;
+use App\Mail\Rejection;
+use App\Mail\Validation;
+use App\Models\Prisesencharge;
+use App\Models\User;
+use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -21,13 +24,17 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class FacturationsController extends VoyagerBaseController
-{
-
+class RemboursementAssurance extends VoyagerBaseController{
     public function index(Request $request)
     {
+        //Mail::to($user->email)->send(new WelcomeEmail($user->name));
+        // Mail::to($request->user())
+        //  ->cc("strangeothmane@gmail.com")
+        //  ->bcc("oelkhemmar@gmail.com")
+        //  ->queue(new Rejection());
         // GET THE SLUG, ex. 'posts', 'pages', etc.
         $slug = $this->getSlug($request);
+
 
         // GET THE DataType based on the slug
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
@@ -127,13 +134,28 @@ class FacturationsController extends VoyagerBaseController
         // Check if BREAD is Translatable
         $isModelTranslatable = is_bread_translatable($model);
 
+
+        // si il est admin il voit tout sinon il voit ses propres demandes
+        $user = Auth::user();
+        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
+            $dataTypeContent = $dataTypeContent->where('demandeur', Auth::user()["id"]);
+            // echo "<pre>";
+            // var_dump($dataTypeContent);
+            // die;
+        }
+
+        //Pour le filtrage des demandes par rapport au statut
+        if ($request->query->has('selected')) {
+            if ($request->query->get('selected') !== "all") {
+                $dataTypeContent = $dataTypeContent->where('statut', $request->query->get("selected"));
+            }
+        }
+
+
         // $user = Auth::user();
-        // if ($user["role_id"] !== Role::where('name', 'admin')->get()->first()->id && $user["role_id"] !== Role::where('name', 'Admin AOS')->get()->first()->id && $user["role_id"] !== Role::where('name', 'Gestionnaire AOS')->get()->first()->id) {
-        //     $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
-        //     // echo "<pre>";
-        //     // var_dump($dataTypeContent);
-        //     // die;
-        // }
+        // echo "<pre>";
+        // var_dump($user["role_id"] !== 1 ? "hello" : "x");
+        // die();
 
         // Eagerload Relations
         $this->eagerLoadRelations($dataTypeContent, $dataType, 'browse', $isModelTranslatable);
@@ -201,86 +223,5 @@ class FacturationsController extends VoyagerBaseController
             'showSoftDeleted',
             'showCheckboxColumn'
         ));
-    }
-
-
-    public function store(Request $request)
-    {
-        //echo "<pre>";var_dump($user);die;
-        //HERE
-        // if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
-        //     $request->merge(['user' => Auth::user()['id']]);
-        // }
-
-        $slug = $this->getSlug($request);
-
-        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
-
-        // Check permission
-        $this->authorize('add', app($dataType->model_name));
-
-
-        //$request->all()["user"] = "4";
-        // $request->set('user',"4");
-        // var_dump($request->all());die;
-
-        // Validate fields with ajax
-        $val = $this->validateBread($request->all(), $dataType->addRows)->validate();
-
-        // ce que j'essaie de faire ici c'est de remplacer le demandeur par note user connecté
-        // $user = Auth::user();
-        // $userToSave = $dataType->addRows->where('display_name', 'Demandeur')->first();
-        // //$userToSave->setId($user->id);
-        // $userToSave->setId(4);
-        // $userToSave->save();
-
-
-        $data = $this->insertUpdateData($request, $slug, $dataType->addRows, new $dataType->model_name());
-        //echo "<pre>"; var_dump($data->etablissement);die;
-
-        event(new BreadDataAdded($dataType, $data));
-
-        //Creer remboursement
-        $this->createRemboursement($data);
-
-        if (!$request->has('_tagging')) {
-            if (auth()->user()->can('browse', $data)) {
-                $redirect = redirect()->route("voyager.{$dataType->slug}.index");
-            } else {
-                $redirect = redirect()->back();
-            }
-
-            return $redirect->with([
-                'message'    => __('voyager::generic.successfully_added_new') . " {$dataType->getTranslatedAttribute('display_name_singular')}",
-                'alert-type' => 'success',
-            ]);
-        } else {
-            return response()->json(['success' => true, 'data' => $data]);
-        }
-    }
-
-    //Fonction de creation de remboursement
-    private function createRemboursement(Facturation $facture)
-    {
-        $id = $facture->id;
-        $date_reglement = $facture->date;
-        $etablissement = $facture->etablissement;
-        $numero_facture = $facture->numerofacture;
-        $date_facture = $facture->datefacture;
-        $montant = $facture->montant;
-        $user = $facture->user;
-        $remboursement = new Remboursementprisesencharge;
-        $remboursement->montant = $montant;
-        $remboursement->periodicite = 12;
-        $remboursement->facture = $id;
-        $remboursement->demandeur = (int)$user;
-        $remboursement->statut = "submit";
-        $remboursement->created_at = date("Y-m-d");
-        $remboursement->etablissement = $etablissement;
-
-        // var_dump($user);die;
-        $remboursement->save();
-
-        
     }
 }

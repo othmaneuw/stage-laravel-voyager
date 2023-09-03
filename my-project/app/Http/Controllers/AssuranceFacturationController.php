@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assurancefacturation;
 use App\Models\Facturation;
+use App\Models\Remboursementassurance;
 use App\Models\Remboursementprisesencharge;
 use TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
@@ -21,7 +23,7 @@ use TCG\Voyager\Facades\Voyager;
 use TCG\Voyager\Http\Controllers\Traits\BreadRelationshipParser;
 use TCG\Voyager\Models\Role;
 
-class FacturationsController extends VoyagerBaseController
+class AssuranceFacturationController extends VoyagerBaseController
 {
 
     public function index(Request $request)
@@ -260,23 +262,23 @@ class FacturationsController extends VoyagerBaseController
     }
 
     //Fonction de creation de remboursement
-    private function createRemboursement(Facturation $facture)
+    private function createRemboursement(Assurancefacturation $facture)
     {
         $id = $facture->id;
         $date_reglement = $facture->date;
-        $etablissement = $facture->etablissement;
+        $assurance = $facture->assurance;
         $numero_facture = $facture->numerofacture;
         $date_facture = $facture->datefacture;
         $montant = $facture->montant;
         $user = $facture->user;
-        $remboursement = new Remboursementprisesencharge;
+        $remboursement = new Remboursementassurance();
         $remboursement->montant = $montant;
         $remboursement->periodicite = 12;
         $remboursement->facture = $id;
         $remboursement->demandeur = (int)$user;
         $remboursement->statut = "submit";
         $remboursement->created_at = date("Y-m-d");
-        $remboursement->etablissement = $etablissement;
+        $remboursement->assurance = $assurance;
 
         // var_dump($user);die;
         $remboursement->save();
