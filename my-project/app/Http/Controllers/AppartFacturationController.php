@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NouvelleFacturation;
 use App\Models\Appartfacturation;
 use App\Models\Assurancefacturation;
 use App\Models\Facturation;
@@ -17,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -295,5 +297,8 @@ class AppartFacturationController extends VoyagerBaseController
 
         // var_dump($user);die;
         $remboursement->save();
+
+        $email = DB::table('users')->where('id',$user)->get()->first()->email;
+        Mail::to($email)->send(new NouvelleFacturation());
     }
 }

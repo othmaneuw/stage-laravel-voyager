@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NouvelleFacturation;
 use App\Models\Assurancefacturation;
 use App\Models\Facturation;
 use App\Models\Remboursementassurance;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use TCG\Voyager\Database\Schema\SchemaManager;
 use TCG\Voyager\Events\BreadDataAdded;
 use TCG\Voyager\Events\BreadDataDeleted;
@@ -286,11 +288,14 @@ class AssuranceFacturationController extends VoyagerBaseController
         $remboursement->facture = $id;
         $remboursement->demandeur = (int)$user;
         $remboursement->statut = "submit";
-        $remboursement->created_at = date("Y-m-d");
+        $remboursement->created_at = date("Y-m-d h:i:s");
         $remboursement->assurance = $assurance;
 
         // var_dump($user);die;
         $remboursement->save();
+
+        $email = DB::table('users')->where('id',$user)->get()->first()->email;
+        Mail::to($email)->send(new NouvelleFacturation());
 
         
     }
