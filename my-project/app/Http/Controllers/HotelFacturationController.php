@@ -276,7 +276,16 @@ class HotelFacturationController extends VoyagerBaseController
         $user = $facture->user;
         $remboursement = new Hotelremboursement();
         $remboursement->montant = $montant;
-        $remboursement->periodicite = 12;
+        if ($montant <= 1000) {
+            $periodicite = "3 mois";
+        } else if ($montant > 1000 && $montant <= 3000) {
+            $periodicite = "6 mois";
+        } else if ($montant > 3000 && $montant <= 6000) {
+            $periodicite = "9 mois";
+        } else {
+            $periodicite = "12 mois";
+        }
+        $remboursement->periodicite = $periodicite;
         $remboursement->facture = $id;
         $remboursement->demandeur = (int)$user;
         $remboursement->statut = "submit";
@@ -284,7 +293,5 @@ class HotelFacturationController extends VoyagerBaseController
 
         // var_dump($user);die;
         $remboursement->save();
-
-        
     }
 }

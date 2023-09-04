@@ -70,7 +70,7 @@ CREATE TABLE `appartfacturations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `appartfacturations` (
 
 LOCK TABLES `appartfacturations` WRITE;
 /*!40000 ALTER TABLE `appartfacturations` DISABLE KEYS */;
-INSERT INTO `appartfacturations` VALUES (1,2,10,'2023-08-24','003','2023-09-01',5000,'2023-08-29 11:11:58','2023-08-29 11:11:58'),(2,1,8,'2023-09-15','003','2023-09-28',3000,'2023-09-03 20:08:26','2023-09-03 20:08:26'),(3,1,3,'2023-09-22','004','2023-09-22',2000,'2023-09-03 20:13:50','2023-09-03 20:13:50');
+INSERT INTO `appartfacturations` VALUES (1,2,10,'2023-08-24','003','2023-09-01',5000,'2023-08-29 11:11:58','2023-08-29 11:11:58'),(2,1,8,'2023-09-15','003','2023-09-28',3000,'2023-09-03 20:08:26','2023-09-03 20:08:26'),(3,1,3,'2023-09-22','004','2023-09-22',2000,'2023-09-03 20:13:50','2023-09-03 20:13:50'),(4,1,6,'2023-09-16','003','2023-09-27',3001,'2023-09-04 10:09:09','2023-09-04 10:09:09');
 /*!40000 ALTER TABLE `appartfacturations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -129,7 +129,7 @@ CREATE TABLE `assurancefacturations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +138,7 @@ CREATE TABLE `assurancefacturations` (
 
 LOCK TABLES `assurancefacturations` WRITE;
 /*!40000 ALTER TABLE `assurancefacturations` DISABLE KEYS */;
-INSERT INTO `assurancefacturations` VALUES (4,4,3,'2023-09-14','003','2023-09-14',3000,'[]','2023-09-03 17:40:08','2023-09-03 17:40:08'),(5,3,8,'2023-09-21','005','2023-09-27',2000,'[]','2023-09-03 17:41:00','2023-09-03 17:41:00'),(6,2,3,'2023-09-29','005','2023-09-23',5000,'[]','2023-09-03 18:01:32','2023-09-03 18:01:32'),(7,1,8,'2023-09-29','007','2023-09-21',100,'[]','2023-09-03 18:03:35','2023-09-03 18:03:35');
+INSERT INTO `assurancefacturations` VALUES (4,4,3,'2023-09-14','003','2023-09-14',3000,'[]','2023-09-03 17:40:08','2023-09-03 17:40:08'),(5,3,8,'2023-09-21','005','2023-09-27',2000,'[]','2023-09-03 17:41:00','2023-09-03 17:41:00'),(6,2,3,'2023-09-29','005','2023-09-23',5000,'[]','2023-09-03 18:01:32','2023-09-03 18:01:32'),(7,1,8,'2023-09-29','007','2023-09-21',100,'[]','2023-09-03 18:03:35','2023-09-03 18:03:35'),(8,3,6,'2023-09-22','ftc 01','2023-09-20',3000,'[]','2023-09-04 09:44:07','2023-09-04 09:44:07'),(9,1,6,'2023-09-30','004','2023-09-29',8000,'[]','2023-09-04 10:00:56','2023-09-04 10:00:56');
 /*!40000 ALTER TABLE `assurancefacturations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +228,7 @@ CREATE TABLE `consultations` (
 
 LOCK TABLES `consultations` WRITE;
 /*!40000 ALTER TABLE `consultations` DISABLE KEYS */;
-INSERT INTO `consultations` VALUES (1,1,'2023-08-10 14:11:00','MEDECIN DU TRAVAIL','2023-08-09 13:11:34','2023-09-03 14:28:45','Validated'),(2,6,'2023-08-22 14:38:00','MEDECIN DU TRAVAIL','2023-08-20 13:38:36','2023-09-01 14:22:50','refused'),(3,6,'2023-08-02 14:39:00','MEDECIN DU TRAVAIL','2023-08-20 13:39:29','2023-08-31 14:36:47','Validated');
+INSERT INTO `consultations` VALUES (1,1,'2023-08-10 14:11:00','MEDECIN DU TRAVAIL','2023-08-09 13:11:34','2023-09-03 14:28:45','Validated'),(2,6,'2023-08-22 14:38:00','MEDECIN DU TRAVAIL','2023-08-20 13:38:36','2023-09-04 09:48:41','Validated'),(3,6,'2023-08-02 14:39:00','MEDECIN DU TRAVAIL','2023-08-20 13:39:29','2023-08-31 14:36:47','Validated');
 /*!40000 ALTER TABLE `consultations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,7 +336,7 @@ CREATE TABLE `demandesestivages` (
 
 LOCK TABLES `demandesestivages` WRITE;
 /*!40000 ALTER TABLE `demandesestivages` DISABLE KEYS */;
-INSERT INTO `demandesestivages` VALUES (1,'hotel','[]','Marrakech','2023-08-17','2023-08-31','Validated','2023-08-09 13:45:03','2023-09-03 14:27:06',1),(2,'hotel','[]','Marrakech','2023-08-19','2023-08-27','refused','2023-08-20 13:56:31','2023-09-03 14:25:39',3),(3,'hotel','[]','Agadir','2023-08-16','2023-08-24','Validated','2023-08-20 14:01:01','2023-08-31 14:48:15',3),(4,'hotel','[]','Rabat','2023-08-20','2023-08-27','Validated','2023-08-20 14:03:20','2023-09-01 13:30:25',6);
+INSERT INTO `demandesestivages` VALUES (1,'hotel','[]','Marrakech','2023-08-17','2023-08-31','Validated','2023-08-09 13:45:03','2023-09-03 14:27:06',1),(2,'hotel','[]','Marrakech','2023-08-19','2023-08-27','Validated','2023-08-20 13:56:31','2023-09-04 09:37:03',3),(3,'hotel','[]','Agadir','2023-08-16','2023-08-24','Validated','2023-08-20 14:01:01','2023-08-31 14:48:15',3),(4,'hotel','[]','Rabat','2023-08-20','2023-08-27','Validated','2023-08-20 14:03:20','2023-09-01 13:30:25',6);
 /*!40000 ALTER TABLE `demandesestivages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -394,7 +394,7 @@ CREATE TABLE `estivageapparts` (
 
 LOCK TABLES `estivageapparts` WRITE;
 /*!40000 ALTER TABLE `estivageapparts` DISABLE KEYS */;
-INSERT INTO `estivageapparts` VALUES (1,1,'2023-08-16','2023-08-24','Validated','2023-08-09 13:58:03','2023-09-03 15:00:05',1),(2,2,'2023-08-20','2023-08-27','Validated','2023-08-20 14:07:36','2023-09-03 20:20:58',3),(3,2,'2023-08-23','2023-08-31','Validated','2023-08-20 14:08:35','2023-08-31 15:27:18',6);
+INSERT INTO `estivageapparts` VALUES (1,1,'2023-08-16','2023-08-24','Validated','2023-08-09 13:58:03','2023-09-03 15:00:05',1),(2,2,'2023-08-20','2023-08-27','Validated','2023-08-20 14:07:36','2023-09-03 20:20:58',3),(3,2,'2023-08-23','2023-08-31','Validated','2023-08-20 14:08:35','2023-09-04 10:12:44',6);
 /*!40000 ALTER TABLE `estivageapparts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -447,7 +447,7 @@ CREATE TABLE `facturations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `user` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -456,7 +456,7 @@ CREATE TABLE `facturations` (
 
 LOCK TABLES `facturations` WRITE;
 /*!40000 ALTER TABLE `facturations` DISABLE KEYS */;
-INSERT INTO `facturations` VALUES (23,'2023-09-15',4,'004','2023-09-15',8000,'[]','2023-09-03 15:48:20','2023-09-03 15:48:20',8),(24,'2023-09-10',5,'003','2023-09-30',7000,'[]','2023-09-03 15:50:19','2023-09-03 15:50:19',3),(25,'2023-09-13',2,'FTC-01','2023-09-22',5000,'[]','2023-09-03 16:03:36','2023-09-03 16:03:36',3);
+INSERT INTO `facturations` VALUES (23,'2023-09-15',4,'004','2023-09-15',8000,'[]','2023-09-03 15:48:20','2023-09-03 15:48:20',8),(24,'2023-09-10',5,'003','2023-09-30',7000,'[]','2023-09-03 15:50:19','2023-09-03 15:50:19',3),(25,'2023-09-13',2,'FTC-01','2023-09-22',5000,'[]','2023-09-03 16:03:36','2023-09-03 16:03:36',3),(26,'2023-09-23',4,'FTC-008','2023-09-21',5000,'[]','2023-09-04 09:56:49','2023-09-04 09:56:49',6);
 /*!40000 ALTER TABLE `facturations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -507,7 +507,7 @@ CREATE TABLE `hotelfacturations` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `montant` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -516,7 +516,7 @@ CREATE TABLE `hotelfacturations` (
 
 LOCK TABLES `hotelfacturations` WRITE;
 /*!40000 ALTER TABLE `hotelfacturations` DISABLE KEYS */;
-INSERT INTO `hotelfacturations` VALUES (2,2,3,'2023-09-25','003','2023-09-27','2023-09-03 19:31:35','2023-09-03 19:31:35',200),(3,2,3,'2023-09-25','003','2023-09-27','2023-09-03 19:32:14','2023-09-03 19:32:14',200),(4,2,8,'2023-09-23','003','2023-09-20','2023-09-03 20:17:14','2023-09-03 20:17:14',10);
+INSERT INTO `hotelfacturations` VALUES (2,2,3,'2023-09-25','003','2023-09-27','2023-09-03 19:31:35','2023-09-03 19:31:35',200),(3,2,3,'2023-09-25','003','2023-09-27','2023-09-03 19:32:14','2023-09-03 19:32:14',200),(4,2,8,'2023-09-23','003','2023-09-20','2023-09-03 20:17:14','2023-09-03 20:17:14',10),(5,2,6,'2023-09-23','ftc','2023-10-03','2023-09-04 09:36:55','2023-09-04 09:36:55',2000),(6,3,8,'2023-09-22','003','2023-09-16','2023-09-04 10:06:20','2023-09-04 10:06:20',900);
 /*!40000 ALTER TABLE `hotelfacturations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -537,7 +537,7 @@ CREATE TABLE `hotelremboursements` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,7 +546,7 @@ CREATE TABLE `hotelremboursements` (
 
 LOCK TABLES `hotelremboursements` WRITE;
 /*!40000 ALTER TABLE `hotelremboursements` DISABLE KEYS */;
-INSERT INTO `hotelremboursements` VALUES (1,200,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 19:32:14'),(2,10,'12',4,8,'submit','2023-09-03 00:00:00','2023-09-03 20:17:15');
+INSERT INTO `hotelremboursements` VALUES (1,200,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 19:32:14'),(2,10,'12',4,8,'submit','2023-09-03 00:00:00','2023-09-03 20:17:15'),(3,2000,'12',5,6,'over','2023-09-04 00:00:00','2023-09-04 09:39:43'),(4,900,'3 mois',6,8,'submit','2023-09-04 00:00:00','2023-09-04 10:06:20');
 /*!40000 ALTER TABLE `hotelremboursements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -596,7 +596,7 @@ CREATE TABLE `loisirsfacturations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -605,7 +605,7 @@ CREATE TABLE `loisirsfacturations` (
 
 LOCK TABLES `loisirsfacturations` WRITE;
 /*!40000 ALTER TABLE `loisirsfacturations` DISABLE KEYS */;
-INSERT INTO `loisirsfacturations` VALUES (1,3,8,'2023-09-28','003','2023-09-15',200,'2023-09-03 18:52:05','2023-09-03 18:52:05'),(2,3,8,'2023-09-28','003','2023-09-15',200,'2023-09-03 18:53:32','2023-09-03 18:53:32'),(3,2,3,'2023-09-21','004','2023-09-28',100,'2023-09-03 18:56:14','2023-09-03 18:56:14'),(4,1,8,'2023-09-03','007','2023-09-21',120,'2023-09-03 19:01:26','2023-09-03 19:01:26');
+INSERT INTO `loisirsfacturations` VALUES (1,3,8,'2023-09-28','003','2023-09-15',200,'2023-09-03 18:52:05','2023-09-03 18:52:05'),(2,3,8,'2023-09-28','003','2023-09-15',200,'2023-09-03 18:53:32','2023-09-03 18:53:32'),(3,2,3,'2023-09-21','004','2023-09-28',100,'2023-09-03 18:56:14','2023-09-03 18:56:14'),(4,1,8,'2023-09-03','007','2023-09-21',120,'2023-09-03 19:01:26','2023-09-03 19:01:26'),(5,2,6,'2023-09-21','9','2023-09-23',2000,'2023-09-04 10:04:14','2023-09-04 10:04:14');
 /*!40000 ALTER TABLE `loisirsfacturations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -627,7 +627,7 @@ CREATE TABLE `loisirsremboursements` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `activite` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -636,7 +636,7 @@ CREATE TABLE `loisirsremboursements` (
 
 LOCK TABLES `loisirsremboursements` WRITE;
 /*!40000 ALTER TABLE `loisirsremboursements` DISABLE KEYS */;
-INSERT INTO `loisirsremboursements` VALUES (1,200,'12',2,8,'submit','2023-09-03 00:00:00','2023-09-03 18:53:32',3),(2,100,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 18:56:14',2),(3,120,'12',4,8,'over','2023-09-03 00:00:00','2023-09-03 19:04:27',1);
+INSERT INTO `loisirsremboursements` VALUES (1,200,'12',2,8,'submit','2023-09-03 00:00:00','2023-09-03 18:53:32',3),(2,100,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 18:56:14',2),(3,120,'12',4,8,'over','2023-09-03 00:00:00','2023-09-03 19:04:27',1),(4,2000,'6 mois',5,6,'submit','2023-09-04 00:00:00','2023-09-04 10:04:14',2);
 /*!40000 ALTER TABLE `loisirsremboursements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -969,7 +969,7 @@ CREATE TABLE `remboursementappartements` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `appart` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -978,7 +978,7 @@ CREATE TABLE `remboursementappartements` (
 
 LOCK TABLES `remboursementappartements` WRITE;
 /*!40000 ALTER TABLE `remboursementappartements` DISABLE KEYS */;
-INSERT INTO `remboursementappartements` VALUES (1,3000,'12',2,8,'over','2023-09-03 00:00:00','2023-09-03 20:15:01',1),(2,2000,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 20:13:50',1);
+INSERT INTO `remboursementappartements` VALUES (1,3000,'12',2,8,'over','2023-09-03 00:00:00','2023-09-03 20:15:01',1),(2,2000,'12',3,3,'submit','2023-09-03 00:00:00','2023-09-03 20:13:50',1),(3,3001,'9 mois',4,6,'submit','2023-09-04 00:00:00','2023-09-04 10:09:09',1);
 /*!40000 ALTER TABLE `remboursementappartements` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1000,7 +1000,7 @@ CREATE TABLE `remboursementassurances` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `assurance` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1009,7 +1009,7 @@ CREATE TABLE `remboursementassurances` (
 
 LOCK TABLES `remboursementassurances` WRITE;
 /*!40000 ALTER TABLE `remboursementassurances` DISABLE KEYS */;
-INSERT INTO `remboursementassurances` VALUES (2,3000,'12',4,3,'submit','2023-09-03 00:00:00','2023-09-03 17:40:08',4),(3,2000,'12',5,8,'over','2023-09-03 00:00:00','2023-09-03 19:03:41',3),(4,5000,'12',6,3,'submit','2023-09-03 00:00:00','2023-09-03 18:01:33',2),(5,100,'12',7,8,'submit','2023-09-03 00:00:00','2023-09-03 18:03:35',1);
+INSERT INTO `remboursementassurances` VALUES (2,3000,'12',4,3,'submit','2023-09-03 00:00:00','2023-09-03 17:40:08',4),(3,2000,'12',5,8,'over','2023-09-03 00:00:00','2023-09-03 19:03:41',3),(4,5000,'12',6,3,'submit','2023-09-03 00:00:00','2023-09-03 18:01:33',2),(5,100,'12',7,8,'submit','2023-09-03 00:00:00','2023-09-03 18:03:35',1),(6,3000,'12',8,6,'submit','2023-09-04 00:00:00','2023-09-04 09:44:07',3),(7,8000,'12 mois',9,6,'submit','2023-09-04 00:00:00','2023-09-04 10:00:56',1);
 /*!40000 ALTER TABLE `remboursementassurances` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1052,7 +1052,7 @@ DROP TABLE IF EXISTS `remboursementprisesencharges`;
 CREATE TABLE `remboursementprisesencharges` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `montant` int(11) NOT NULL,
-  `periodicite` int(11) NOT NULL DEFAULT 12,
+  `periodicite` varchar(255) NOT NULL,
   `facture` int(11) NOT NULL,
   `demandeur` int(11) NOT NULL,
   `statut` varchar(255) DEFAULT 'En attente',
@@ -1060,7 +1060,7 @@ CREATE TABLE `remboursementprisesencharges` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `etablissement` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1069,7 +1069,7 @@ CREATE TABLE `remboursementprisesencharges` (
 
 LOCK TABLES `remboursementprisesencharges` WRITE;
 /*!40000 ALTER TABLE `remboursementprisesencharges` DISABLE KEYS */;
-INSERT INTO `remboursementprisesencharges` VALUES (7,8000,12,23,8,'over','2023-09-03 00:00:00','2023-09-03 15:48:57',4),(8,7000,12,24,3,'submit','2023-09-03 00:00:00','2023-09-03 15:50:19',5),(9,5000,12,25,3,'submit','2023-09-03 00:00:00','2023-09-03 16:03:36',2);
+INSERT INTO `remboursementprisesencharges` VALUES (7,8000,'12',23,8,'over','2023-09-03 00:00:00','2023-09-03 15:48:57',4),(8,7000,'12',24,3,'submit','2023-09-03 00:00:00','2023-09-03 15:50:19',5),(9,5000,'12',25,3,'submit','2023-09-03 00:00:00','2023-09-03 16:03:36',2),(10,5000,'9 mois',26,6,'submit','2023-09-04 00:00:00','2023-09-04 09:56:49',4);
 /*!40000 ALTER TABLE `remboursementprisesencharges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1180,7 +1180,7 @@ CREATE TABLE `souscriptionassurances` (
   `statut` varchar(255) NOT NULL DEFAULT 'submit',
   `beneficiaire` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1189,7 +1189,7 @@ CREATE TABLE `souscriptionassurances` (
 
 LOCK TABLES `souscriptionassurances` WRITE;
 /*!40000 ALTER TABLE `souscriptionassurances` DISABLE KEYS */;
-INSERT INTO `souscriptionassurances` VALUES (1,4,'2023-08-12',12,NULL,'2023-08-09 12:57:16','2023-09-03 14:23:04',1,'Validated','Moi meme'),(3,2,'2023-08-18',12,NULL,'2023-08-20 13:21:42','2023-09-02 11:30:53',3,'refused','Moi'),(4,1,'2023-08-10',12,NULL,'2023-08-20 13:23:06','2023-09-02 11:29:48',6,'Validated','Moi'),(5,3,'2023-08-24',12,NULL,'2023-08-20 13:28:50','2023-09-02 11:31:40',3,'Validated','Moi'),(6,4,'2023-08-18',12,NULL,'2023-08-20 13:30:17','2023-09-02 11:32:47',3,'Validated','Moi'),(8,1,'2023-08-19',12,NULL,'2023-08-23 09:24:47','2023-09-01 13:06:51',9,'refused','Othmane'),(9,1,'2023-08-04',12,NULL,'2023-08-23 09:31:10','2023-09-03 14:41:33',9,'Validated','Othmane'),(11,3,'2023-08-18',12,NULL,'2023-08-23 17:01:14','2023-09-01 13:04:51',9,'Validated','Moi'),(12,4,'2023-09-22',12,5000,'2023-09-03 17:58:05','2023-09-03 17:59:07',3,'Validated','Moi');
+INSERT INTO `souscriptionassurances` VALUES (1,4,'2023-08-12',12,NULL,'2023-08-09 12:57:16','2023-09-03 14:23:04',1,'Validated','Moi meme'),(3,2,'2023-08-18',12,NULL,'2023-08-20 13:21:42','2023-09-02 11:30:53',3,'refused','Moi'),(4,1,'2023-08-10',12,NULL,'2023-08-20 13:23:06','2023-09-02 11:29:48',6,'Validated','Moi'),(5,3,'2023-08-24',12,NULL,'2023-08-20 13:28:50','2023-09-02 11:31:40',3,'Validated','Moi'),(6,4,'2023-08-18',12,NULL,'2023-08-20 13:30:17','2023-09-02 11:32:47',3,'Validated','Moi'),(8,1,'2023-08-19',12,NULL,'2023-08-23 09:24:47','2023-09-01 13:06:51',9,'refused','Othmane'),(9,1,'2023-08-04',12,NULL,'2023-08-23 09:31:10','2023-09-03 14:41:33',9,'Validated','Othmane'),(11,3,'2023-08-18',12,NULL,'2023-08-23 17:01:14','2023-09-01 13:04:51',9,'Validated','Moi'),(12,4,'2023-09-22',12,5000,'2023-09-03 17:58:05','2023-09-03 17:59:07',3,'Validated','Moi'),(13,3,'2023-09-20',12,NULL,'2023-09-04 09:41:19','2023-09-04 09:42:42',6,'Validated','moi');
 /*!40000 ALTER TABLE `souscriptionassurances` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2259,4 +2259,4 @@ USE `test`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-03 20:24:00
+-- Dump completed on 2023-09-04 10:15:20
