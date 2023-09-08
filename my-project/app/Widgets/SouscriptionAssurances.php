@@ -24,7 +24,7 @@ class SouscriptionAssurances extends BaseDimmer
      */
     public function run()
     {
-        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id|| Auth::user()['role_id'] == Role::where('name', 'Admin AOS')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Gestionnaire AOS')->get()->first()->id){
+        if(Auth::user()['role_id'] == Role::where('name','admin')->get()->first()->id|| Auth::user()['role_id'] == Role::where('name', 'Admin AOS')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Gestionnaire AOS')->get()->first()->id || Auth::user()['role_id'] == Role::where('name', 'Gestionnaire Assurance')->get()->first()->id){
             $result = \App\Models\Souscriptionassurance::where('statut','submit')->count();
         }else{
             $result = \App\Models\Souscriptionassurance::where('user',Auth::user()->id)->where('statut','submit')->count();

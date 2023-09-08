@@ -138,7 +138,7 @@ class PrisesEnChargeController extends VoyagerBaseController
 
         // si il est admin il voit tout sinon il voit ses propres demandes
         $user = Auth::user();
-        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
+        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4 && $user["role_id"] !== 5) {
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
             // echo "<pre>";
             // var_dump($dataTypeContent);

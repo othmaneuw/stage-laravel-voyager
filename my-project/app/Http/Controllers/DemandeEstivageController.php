@@ -126,7 +126,7 @@ class DemandeEstivageController extends VoyagerBaseController{
         $isModelTranslatable = is_bread_translatable($model);
 
         $user = Auth::user();
-        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
+        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4 && $user['role_id'] !== 8) {
             $dataTypeContent = $dataTypeContent->where('user', Auth::user()["id"]);
         }
 

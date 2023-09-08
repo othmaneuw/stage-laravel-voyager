@@ -137,7 +137,7 @@ class Remboursementpriseencharge extends VoyagerBaseController{
 
         // si il est admin il voit tout sinon il voit ses propres demandes
         $user = Auth::user();
-        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4) {
+        if ($user["role_id"] !== 1 && $user["role_id"] !== 3 && $user["role_id"] !== 4 && $user["role_id"] !== 5) {
             $dataTypeContent = $dataTypeContent->where('demandeur', Auth::user()["id"]);
             // echo "<pre>";
             // var_dump($dataTypeContent);
@@ -258,7 +258,7 @@ class Remboursementpriseencharge extends VoyagerBaseController{
             Role::where('name','admin')->get()->first()->id != $user['role_id'] && 
             Role::where('name','Gestionnaire AOS')->get()->first()->id != $user['role_id'] && 
             Role::where('name','Admin AOS')->get()->first()->id != $user['role_id']){
-                // "helloooooooooooooooooooooooooooooooooo";die;
+                //"helloooooooooooooooooooooooooooooooooo";die;
                 //unset($dataType->editRows[$key]);
                 //TODO : DISPLAY NONE
             }
