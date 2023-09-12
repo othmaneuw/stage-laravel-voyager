@@ -279,7 +279,11 @@ class PrisesEnChargeController extends VoyagerBaseController
     {
         //echo "<pre>";var_dump($user);die;
         // la nouvelle demande est sauvegardé avec l'utilisateur connecté en tant que demandeur s'il n'est pas admin
-        if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id) {
+        if (Auth::user()['role_id'] !== Role::where('name', 'admin')->get()->first()->id
+         && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id
+         && Auth::user()['role_id'] !== Role::where('name', 'Gestionnaire AOS')->get()->first()->id
+         && Auth::user()['role_id'] !== Role::where('name', 'Gestionnaire Prise en charges')->get()->first()->id
+         ) {
             $request->merge(['user' => Auth::user()['id']]);
         }
 
@@ -406,5 +410,4 @@ class PrisesEnChargeController extends VoyagerBaseController
             'alert-type' => 'success',
         ]);
     }
-
 }

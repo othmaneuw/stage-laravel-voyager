@@ -208,7 +208,11 @@ class ReserverActiviteController extends VoyagerBaseController{
     public function store(Request $request)
     {
         //echo "<pre>";var_dump($user);die;
-        if(Auth::user()['role_id'] !== Role::where('name','admin')->get()->first()->id && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id){
+        if(Auth::user()['role_id'] !== Role::where('name','admin')->get()->first()->id 
+        && Auth::user()['role_id'] !== Role::where('name', 'Admin AOS')->get()->first()->id
+        && Auth::user()['role_id'] !== Role::where('name', 'Gestionnaire AOS')->get()->first()->id
+         && Auth::user()['role_id'] !== Role::where('name', 'Gestionnaire Activite')->get()->first()->id
+        ){
             $request->merge(['user'=> Auth::user()['id'] ]);
         }
         $slug = $this->getSlug($request);

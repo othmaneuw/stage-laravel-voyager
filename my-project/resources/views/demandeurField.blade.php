@@ -5,7 +5,10 @@
 @if (Auth::user()['role_id'] ==
         Role::where('name', 'admin')->get()->first()->id ||
         Auth::user()['role_id'] ==
-            Role::where('name', 'Admin AOS')->get()->first()->id)
+            Role::where('name', 'Admin AOS')->get()->first()->id ||
+        Auth::user()['role_id'] >= 5 ||
+        Auth::user()['role_id'] ==
+            Role::where('name', 'Gestionnaire AOS')->get()->first()->id)
 
     @if (isset($options->model) && isset($options->type))
 

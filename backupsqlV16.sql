@@ -129,7 +129,7 @@ CREATE TABLE `assurancefacturations` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -938,7 +938,7 @@ CREATE TABLE `prisesencharges` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `test` varchar(255) DEFAULT 'TEST',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -947,7 +947,7 @@ CREATE TABLE `prisesencharges` (
 
 LOCK TABLES `prisesencharges` WRITE;
 /*!40000 ALTER TABLE `prisesencharges` DISABLE KEYS */;
-INSERT INTO `prisesencharges` VALUES (40,3,4,NULL,'[]','2023-08-20 12:28:01','2023-09-01 10:23:56','Moi meme','refused',NULL,12,NULL,NULL,'TEST'),(41,3,2,NULL,'[]','2023-08-20 12:37:40','2023-09-01 11:59:17','Moi','Validated',NULL,12,NULL,NULL,'TEST'),(42,1,3,'hello','[]','2023-08-22 09:59:28','2023-09-01 10:22:16','Moi','refused',NULL,12,NULL,NULL,'TEST'),(43,3,4,'helloooo','[]','2023-08-22 13:44:11','2023-09-01 10:31:25','Moi','refused',NULL,12,NULL,NULL,'TEST'),(44,8,4,'HELLO','[]','2023-08-22 20:56:47','2023-09-01 12:22:24','Moi','refused',NULL,12,NULL,NULL,'TEST'),(45,3,2,'je suis malade','[]','2023-09-01 10:49:28','2023-09-02 11:20:15','Moi','Validated',NULL,12,NULL,NULL,'TEST'),(46,9,5,'eeeee','[]','2023-09-01 11:02:41','2023-09-02 11:16:10','elle','Validated',NULL,12,NULL,NULL,'TEST'),(47,3,2,'hhh','[]','2023-09-01 15:14:15','2023-09-01 15:14:15','Moi','submit',NULL,12,NULL,NULL,'TEST'),(48,3,3,'kkkkkk','[]','2023-09-01 15:17:56','2023-09-02 11:14:54','mon fils','Validated',NULL,12,NULL,NULL,'TEST'),(49,3,4,'lll','[]','2023-09-01 15:20:00','2023-09-01 15:23:40','mon fils','Validated',NULL,12,NULL,NULL,'TEST'),(50,3,1,'llll','[]','2023-09-01 15:26:57','2023-09-02 11:18:33','Moi','refused',NULL,12,NULL,NULL,'TEST'),(51,8,3,'hello','[]','2023-09-02 09:56:24','2023-09-02 11:17:32','Moi','refused',NULL,12,NULL,NULL,'TEST'),(52,3,2,'HH','[]','2023-09-03 16:00:30','2023-09-03 16:02:01','TAHA','Validated',NULL,12,NULL,NULL,'TEST'),(53,8,4,'JSJSKS','[]','2023-09-05 16:21:47','2023-09-05 16:24:38','Moi','Validated',10000,12,NULL,NULL,'TEST'),(54,8,4,'HELLO','[]','2023-09-06 11:19:25','2023-09-08 12:49:01','Moi','refused',2600,12,NULL,NULL,'TEST');
+INSERT INTO `prisesencharges` VALUES (40,3,4,NULL,'[]','2023-08-20 12:28:01','2023-09-01 10:23:56','Moi meme','refused',NULL,12,NULL,NULL,'TEST'),(41,3,2,NULL,'[]','2023-08-20 12:37:40','2023-09-01 11:59:17','Moi','Validated',NULL,12,NULL,NULL,'TEST'),(42,1,3,'hello','[]','2023-08-22 09:59:28','2023-09-01 10:22:16','Moi','refused',NULL,12,NULL,NULL,'TEST'),(43,3,4,'helloooo','[]','2023-08-22 13:44:11','2023-09-01 10:31:25','Moi','refused',NULL,12,NULL,NULL,'TEST'),(44,8,4,'HELLO','[]','2023-08-22 20:56:47','2023-09-01 12:22:24','Moi','refused',NULL,12,NULL,NULL,'TEST'),(45,3,2,'je suis malade','[]','2023-09-01 10:49:28','2023-09-02 11:20:15','Moi','Validated',NULL,12,NULL,NULL,'TEST'),(46,9,5,'eeeee','[]','2023-09-01 11:02:41','2023-09-02 11:16:10','elle','Validated',NULL,12,NULL,NULL,'TEST'),(47,3,2,'hhh','[]','2023-09-01 15:14:15','2023-09-01 15:14:15','Moi','submit',NULL,12,NULL,NULL,'TEST'),(48,3,3,'kkkkkk','[]','2023-09-01 15:17:56','2023-09-02 11:14:54','mon fils','Validated',NULL,12,NULL,NULL,'TEST'),(49,3,4,'lll','[]','2023-09-01 15:20:00','2023-09-01 15:23:40','mon fils','Validated',NULL,12,NULL,NULL,'TEST'),(50,3,1,'llll','[]','2023-09-01 15:26:57','2023-09-02 11:18:33','Moi','refused',NULL,12,NULL,NULL,'TEST'),(51,8,3,'hello','[]','2023-09-02 09:56:24','2023-09-02 11:17:32','Moi','refused',NULL,12,NULL,NULL,'TEST'),(52,3,2,'HH','[]','2023-09-03 16:00:30','2023-09-03 16:02:01','TAHA','Validated',NULL,12,NULL,NULL,'TEST'),(53,8,4,'JSJSKS','[]','2023-09-05 16:21:47','2023-09-05 16:24:38','Moi','Validated',10000,12,NULL,NULL,'TEST'),(54,8,4,'HELLO','[]','2023-09-06 11:19:25','2023-09-08 12:49:01','Moi','refused',2600,12,NULL,NULL,'TEST'),(55,9,5,NULL,'[]','2023-09-12 13:08:37','2023-09-12 13:12:25','Moi','submit',2300,12,NULL,NULL,'TEST');
 /*!40000 ALTER TABLE `prisesencharges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1000,7 +1000,7 @@ CREATE TABLE `remboursementassurances` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `assurance` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1009,7 +1009,7 @@ CREATE TABLE `remboursementassurances` (
 
 LOCK TABLES `remboursementassurances` WRITE;
 /*!40000 ALTER TABLE `remboursementassurances` DISABLE KEYS */;
-INSERT INTO `remboursementassurances` VALUES (2,3000,'12',4,3,'submit','2023-09-03 00:00:00','2023-09-03 17:40:08',4),(3,2000,'12',5,8,'over','2023-09-03 00:00:00','2023-09-03 19:03:41',3),(4,5000,'12',6,3,'submit','2023-09-03 00:00:00','2023-09-03 18:01:33',2),(5,100,'12',7,8,'submit','2023-09-03 00:00:00','2023-09-03 18:03:35',1),(6,3000,'12',8,6,'submit','2023-09-04 00:00:00','2023-09-04 09:44:07',3),(7,8000,'12 mois',9,6,'submit','2023-09-04 00:00:00','2023-09-04 10:00:56',1),(8,9000,'12 mois',10,8,'submit','2023-09-04 00:00:00','2023-09-04 15:04:49',2),(9,3000,'6 mois',11,3,'submit','2023-09-04 03:09:54','2023-09-04 15:14:54',3),(10,7000000,'12 mois',12,10,'submit','2023-09-04 03:17:47','2023-09-04 15:17:47',4),(11,4500,'9 mois',13,11,'submit','2023-09-04 03:29:41','2023-09-04 15:29:41',3),(12,1000,'3 mois',14,3,'submit','2023-09-05 07:06:10','2023-09-05 19:06:10',2),(13,7000,'12 mois',15,8,'submit','2023-09-07 10:05:28','2023-09-07 10:05:28',2),(14,2300,'two',16,8,'submit','2023-09-08 01:34:00','2023-09-08 14:00:16',4),(15,5000,'seven',17,8,'submit','2023-09-08 04:54:08','2023-09-08 19:10:21',3),(16,2500,'four',18,8,'submit','2023-09-11 11:15:51','2023-09-11 11:20:24',4),(17,200,'two',19,10,'submit','2023-09-11 01:47:39','2023-09-11 13:55:14',2),(18,3000,'six',20,10,'submit','2023-09-12 12:26:26','2023-09-12 12:32:03',3);
+INSERT INTO `remboursementassurances` VALUES (2,3000,'12',4,3,'submit','2023-09-03 00:00:00','2023-09-03 17:40:08',4),(3,2000,'12',5,8,'over','2023-09-03 00:00:00','2023-09-03 19:03:41',3),(4,5000,'12',6,3,'submit','2023-09-03 00:00:00','2023-09-03 18:01:33',2),(5,100,'12',7,8,'submit','2023-09-03 00:00:00','2023-09-03 18:03:35',1),(6,3000,'12',8,6,'submit','2023-09-04 00:00:00','2023-09-04 09:44:07',3),(7,8000,'12 mois',9,6,'submit','2023-09-04 00:00:00','2023-09-04 10:00:56',1),(8,9000,'12 mois',10,8,'submit','2023-09-04 00:00:00','2023-09-04 15:04:49',2),(9,3000,'6 mois',11,3,'submit','2023-09-04 03:09:54','2023-09-04 15:14:54',3),(10,7000000,'12 mois',12,10,'submit','2023-09-04 03:17:47','2023-09-04 15:17:47',4),(11,4500,'9 mois',13,11,'submit','2023-09-04 03:29:41','2023-09-04 15:29:41',3),(12,1000,'3 mois',14,3,'submit','2023-09-05 07:06:10','2023-09-05 19:06:10',2),(13,7000,'12 mois',15,8,'submit','2023-09-07 10:05:28','2023-09-07 10:05:28',2),(14,2300,'two',16,8,'submit','2023-09-08 01:34:00','2023-09-08 14:00:16',4),(15,5000,'seven',17,8,'submit','2023-09-08 04:54:08','2023-09-08 19:10:21',3),(16,2500,'four',18,8,'submit','2023-09-11 11:15:51','2023-09-11 11:20:24',4),(17,200,'two',19,10,'submit','2023-09-11 01:47:39','2023-09-11 13:55:14',2),(18,3000,'six',20,10,'submit','2023-09-12 12:26:26','2023-09-12 12:32:03',3),(19,2300,'six',21,10,'submit','2023-09-12 01:43:48','2023-09-12 13:45:22',2);
 /*!40000 ALTER TABLE `remboursementassurances` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1089,7 +1089,7 @@ CREATE TABLE `reservation_activites` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `statut` varchar(255) NOT NULL DEFAULT 'submit',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1098,7 +1098,7 @@ CREATE TABLE `reservation_activites` (
 
 LOCK TABLES `reservation_activites` WRITE;
 /*!40000 ALTER TABLE `reservation_activites` DISABLE KEYS */;
-INSERT INTO `reservation_activites` VALUES (1,1,3,12,'2023-08-09 13:24:29','2023-09-01 15:25:06','refused'),(2,3,2,12,'2023-08-20 13:50:49','2023-09-01 13:21:39','refused'),(3,3,1,2,'2023-08-20 13:51:36','2023-09-01 13:12:42','Validated'),(4,8,2,4,'2023-08-22 21:49:23','2023-08-22 21:51:27','refused'),(5,8,1,2,'2023-09-03 18:59:24','2023-09-03 19:00:08','Validated'),(6,8,2,4,'2023-09-06 11:20:30','2023-09-08 13:05:31','Validated'),(7,8,2,6,'2023-09-06 11:20:59','2023-09-06 11:20:59','submit');
+INSERT INTO `reservation_activites` VALUES (1,1,3,12,'2023-08-09 13:24:29','2023-09-01 15:25:06','refused'),(2,3,2,12,'2023-08-20 13:50:49','2023-09-01 13:21:39','refused'),(3,3,1,2,'2023-08-20 13:51:36','2023-09-01 13:12:42','Validated'),(4,8,2,4,'2023-08-22 21:49:23','2023-08-22 21:51:27','refused'),(5,8,1,2,'2023-09-03 18:59:24','2023-09-03 19:00:08','Validated'),(6,8,2,4,'2023-09-06 11:20:30','2023-09-08 13:05:31','Validated'),(7,8,2,6,'2023-09-06 11:20:59','2023-09-06 11:20:59','submit'),(8,6,3,33,'2023-09-12 13:29:23','2023-09-12 13:29:23','submit');
 /*!40000 ALTER TABLE `reservation_activites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1180,7 +1180,7 @@ CREATE TABLE `souscriptionassurances` (
   `statut` varchar(255) NOT NULL DEFAULT 'submit',
   `beneficiaire` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1189,7 +1189,7 @@ CREATE TABLE `souscriptionassurances` (
 
 LOCK TABLES `souscriptionassurances` WRITE;
 /*!40000 ALTER TABLE `souscriptionassurances` DISABLE KEYS */;
-INSERT INTO `souscriptionassurances` VALUES (1,4,'2023-08-12',12,NULL,'2023-08-09 12:57:16','2023-09-03 14:23:04',1,'Validated','Moi meme'),(3,2,'2023-08-18',12,NULL,'2023-08-20 13:21:42','2023-09-02 11:30:53',3,'refused','Moi'),(4,1,'2023-08-10',12,NULL,'2023-08-20 13:23:06','2023-09-02 11:29:48',6,'Validated','Moi'),(5,3,'2023-08-24',12,NULL,'2023-08-20 13:28:50','2023-09-02 11:31:40',3,'Validated','Moi'),(6,4,'2023-08-18',12,NULL,'2023-08-20 13:30:17','2023-09-02 11:32:47',3,'Validated','Moi'),(8,1,'2023-08-19',12,NULL,'2023-08-23 09:24:47','2023-09-01 13:06:51',9,'refused','Othmane'),(9,1,'2023-08-04',12,NULL,'2023-08-23 09:31:10','2023-09-03 14:41:33',9,'Validated','Othmane'),(11,3,'2023-08-18',12,NULL,'2023-08-23 17:01:14','2023-09-01 13:04:51',9,'Validated','Moi'),(12,4,'2023-09-22',12,5000,'2023-09-03 17:58:05','2023-09-03 17:59:07',3,'Validated','Moi'),(13,3,'2023-09-20',12,NULL,'2023-09-04 09:41:19','2023-09-04 09:42:42',6,'Validated','moi'),(14,3,'2023-09-02',12,1000,'2023-09-05 16:48:27','2023-09-05 16:51:32',8,'Validated','Othmane'),(15,3,'2023-09-02',12,3000,'2023-09-06 11:21:57','2023-09-08 10:45:29',8,'Validated','Moi'),(16,4,'2023-09-15',12,4000,'2023-09-08 12:21:13','2023-09-08 17:06:35',6,'Validated','Moi'),(17,2,'2023-09-05',12,2222,'2023-09-08 13:33:08','2023-09-08 14:08:11',14,'refused','Moi');
+INSERT INTO `souscriptionassurances` VALUES (1,4,'2023-08-12',12,NULL,'2023-08-09 12:57:16','2023-09-03 14:23:04',1,'Validated','Moi meme'),(3,2,'2023-08-18',12,NULL,'2023-08-20 13:21:42','2023-09-02 11:30:53',3,'refused','Moi'),(4,1,'2023-08-10',12,NULL,'2023-08-20 13:23:06','2023-09-02 11:29:48',6,'Validated','Moi'),(5,3,'2023-08-24',12,NULL,'2023-08-20 13:28:50','2023-09-02 11:31:40',3,'Validated','Moi'),(6,4,'2023-08-18',12,NULL,'2023-08-20 13:30:17','2023-09-02 11:32:47',3,'Validated','Moi'),(8,1,'2023-08-19',12,NULL,'2023-08-23 09:24:47','2023-09-01 13:06:51',9,'refused','Othmane'),(9,1,'2023-08-04',12,NULL,'2023-08-23 09:31:10','2023-09-03 14:41:33',9,'Validated','Othmane'),(11,3,'2023-08-18',12,NULL,'2023-08-23 17:01:14','2023-09-01 13:04:51',9,'Validated','Moi'),(12,4,'2023-09-22',12,5000,'2023-09-03 17:58:05','2023-09-03 17:59:07',3,'Validated','Moi'),(13,3,'2023-09-20',12,NULL,'2023-09-04 09:41:19','2023-09-04 09:42:42',6,'Validated','moi'),(14,3,'2023-09-02',12,1000,'2023-09-05 16:48:27','2023-09-05 16:51:32',8,'Validated','Othmane'),(15,3,'2023-09-02',12,3000,'2023-09-06 11:21:57','2023-09-08 10:45:29',8,'Validated','Moi'),(16,4,'2023-09-15',12,4000,'2023-09-08 12:21:13','2023-09-08 17:06:35',6,'Validated','Moi'),(17,2,'2023-09-05',12,2222,'2023-09-08 13:33:08','2023-09-08 14:08:11',14,'refused','Moi'),(18,4,'2023-09-16',12,2300,'2023-09-12 13:30:40','2023-09-12 13:30:40',10,'submit','Moi');
 /*!40000 ALTER TABLE `souscriptionassurances` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2259,4 +2259,4 @@ USE `test`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-12 12:49:33
+-- Dump completed on 2023-09-12 13:51:43
