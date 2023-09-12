@@ -231,6 +231,7 @@ class Remboursementpriseencharge extends VoyagerBaseController{
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
+
         if (strlen($dataType->model_name) != 0) {
             $model = app($dataType->model_name);
             $query = $model->query();
@@ -258,7 +259,10 @@ class Remboursementpriseencharge extends VoyagerBaseController{
             Role::where('name','admin')->get()->first()->id != $user['role_id'] && 
             Role::where('name','Gestionnaire AOS')->get()->first()->id != $user['role_id'] && 
             Role::where('name','Admin AOS')->get()->first()->id != $user['role_id']){
-                //"helloooooooooooooooooooooooooooooooooo";die;
+                //echo "helloooooooooooooooooooooooooooooooooo";die;
+                // echo "<pre>";
+                // var_dump($row);
+                // die();
                 //unset($dataType->editRows[$key]);
                 //TODO : DISPLAY NONE
             }

@@ -2,9 +2,11 @@
     use TCG\Voyager\Models\Role;
     $user = Auth::user();
 @endphp
-
-
-
+          <style>
+            select[style*="display:none;"] + .select2{
+               display: none;
+            }
+          </style>
 
 @if(isset($options->model) && isset($options->type))
 
@@ -29,9 +31,8 @@
                 @endif
 
             @else
-
                 <select
-                    {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }}
+                    style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}"
                     class="form-control select2-ajax" name="{{ $options->column }}"
                     data-get-items-route="{{route('voyager.' . $dataType->slug.'.relation')}}"
                     data-get-items-field="{{$row->field}}"
@@ -161,6 +162,7 @@
 
             @else
                 <select
+                style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}"
                     class="form-control select2-ajax @if(isset($options->taggable) && $options->taggable === 'on') taggable @endif"
                     name="{{ $relationshipField }}[]" multiple
                     data-get-items-route="{{route('voyager.' . $dataType->slug.'.relation')}}"

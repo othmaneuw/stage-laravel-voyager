@@ -4,7 +4,11 @@
 @endphp
 
 
-
+<style>
+    select[style*="display:none;"] + .select2{
+       display: none;
+    }
+  </style>
 
 @if(isset($options->model) && isset($options->type))
 
@@ -31,7 +35,7 @@
             @else
 
                 <select
-                    {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }}
+                style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}"
                     class="form-control select2-ajax" name="{{ $options->column }}"
                     data-get-items-route="{{route('voyager.' . $dataType->slug.'.relation')}}"
                     data-get-items-field="{{$row->field}}"

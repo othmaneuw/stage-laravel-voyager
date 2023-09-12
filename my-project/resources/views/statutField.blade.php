@@ -3,6 +3,12 @@
     $user = Auth::user();
 @endphp
 
+<style>
+    select[style*="display:none;"] + .select2{
+       display: none;
+    }
+  </style>
+
 
 @if(isset($options->relationship))
 
@@ -18,7 +24,7 @@
             <?php $selected_value = old($row->field); ?>
         @endif
 
-        <select class="form-control select2" name="{{ $row->field }}" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }}>
+        <select class="form-control select2" name="{{ $row->field }}" style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}">
             <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
 
             @if(isset($options->options))
@@ -62,11 +68,12 @@
             </optgroup>
         </select>
     @else
-        <select class="form-control select2" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }} name="{{ $row->field }}"></select>
+        <select  style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}"            class="form-control select2" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }} name="{{ $row->field }}"></select>
     @endif
 @else
     <?php $selected_value = (isset($dataTypeContent->{$row->field}) && !is_null(old($row->field, $dataTypeContent->{$row->field}))) ? old($row->field, $dataTypeContent->{$row->field}) : old($row->field); ?>
-    <select class="form-control select2" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }} name="{{ $row->field }}">
+    <select style="{{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none;" : "" }}"
+        class="form-control select2" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "disabled" : "" }} name="{{ $row->field }}">
         <?php $default = (isset($options->default) && !isset($dataTypeContent->{$row->field})) ? $options->default : null; ?>
         @if(isset($options->options))
             @foreach($options->options as $key => $option)

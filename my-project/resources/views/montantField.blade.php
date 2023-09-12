@@ -13,5 +13,5 @@
        step="{{ $options->step ?? 'any' }}"
        placeholder="{{ old($row->field, $options->placeholder ?? $row->getTranslatedAttribute('display_name')) }}"
        value="{{ old($row->field, $dataTypeContent->{$row->field} ?? $options->default ?? '') }}"
-       {{ $user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "readonly" : ""  }}
+       style=" {{$user['role_id'] == Role::where('name','Membre AOS')->get()->first()->id ? "display:none" : ""}}"
        >
