@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Actions\MyEditAction;
 use Illuminate\Support\ServiceProvider;
+use TCG\Voyager\Actions\EditAction;
+use TCG\Voyager\Facades\Voyager;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Voyager::replaceAction(EditAction::class,MyEditAction::class);
     }
 }
