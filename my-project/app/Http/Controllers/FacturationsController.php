@@ -298,6 +298,7 @@ class FacturationsController extends VoyagerBaseController
         $remboursement->etablissement = $data->get('etablissement');
         $remboursement->facture = $facturation->id;
         $remboursement->periodicite = "one";
+        $remboursement->statut = "submit";
         $remboursement->save();
         $user = DB::table('users')->where('id',$data->get('user'))->get()->first();
         $user_name = $user->name;
