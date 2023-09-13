@@ -374,6 +374,8 @@ class FacturationsController extends VoyagerBaseController
     {
         $slug = $this->getSlug($request);
 
+        
+
 
         $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
 
@@ -408,6 +410,9 @@ class FacturationsController extends VoyagerBaseController
                 event(new BreadDataDeleted($dataType, $data));
             }
         }
+
+         DB::table('remboursementprisesencharges')->where('facture',$id)->delete();
+        
 
         $displayName = $affected > 1 ? $dataType->getTranslatedAttribute('display_name_plural') : $dataType->getTranslatedAttribute('display_name_singular');
 
