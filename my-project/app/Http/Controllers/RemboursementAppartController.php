@@ -6,6 +6,7 @@ use App\Mail\NouvelleDemande;
 use App\Mail\Rejection;
 use App\Mail\Validation;
 use App\Models\Prisesencharge;
+use App\Models\Remboursementappartement;
 use App\Models\User;
 use \TCG\Voyager\Http\Controllers\VoyagerBaseController;
 use Exception;
@@ -224,4 +225,70 @@ class RemboursementAppartController extends VoyagerBaseController{
             'showCheckboxColumn'
         ));
     }
+
+
+
+    public function update(Request $request, $id)
+    {
+        $slug = $this->getSlug($request);
+
+        
+        $dataType = Voyager::model('DataType')->where('slug', '=', $slug)->first();
+        
+        // changer la valeur de l'attribut is_updated apres la modification de la periodicite
+        $remboursement = Remboursementappartement::where('id',$id)->get()->first();
+        if($remboursement->periodicite !== $request->request->get('periodicite') 
+        && Auth::user()['role_id'] === Role::where('name',"Membre AOS")->get()->first()->id ){
+            $remboursement->is_updated = "true";
+            $remboursement->save();
+        }
+
+        // Compatibility with Model binding.
+        $id = $id instanceof \Illuminate\Database\Eloquent\Model ? $id->{$id->getKeyName()} : $id;
+
+        $model = app($dataType->model_name);
+        $query = $model->query();
+        if ($dataType->scope && $dataType->scope != '' && method_exists($model, 'scope'.ucfirst($dataType->scope))) {
+            $query = $query->{$dataType->scope}();
+        }
+        if ($model && in_array(SoftDeletes::class, class_uses_recursive($model))) {
+            $query = $query->withTrashed();
+        }
+
+        $data = $query->findOrFail($id);
+
+        // Check permission
+        $this->authorize('edit', $data);
+
+        // Validate fields with ajax
+        $val = $this->validateBread($request->all(), $dataType->editRows, $dataType->name, $id)->validate();
+
+        // Get fields with images to remove before updating and make a copy of $data
+        $to_remove = $dataType->editRows->where('type', 'image')
+            ->filter(function ($item, $key) use ($request) {
+                return $request->hasFile($item->field);
+            });
+        $original_data = clone($data);
+
+        $this->insertUpdateData($request, $slug, $dataType->editRows, $data);
+
+        // Delete Images
+        $this->deleteBreadImages($original_data, $to_remove);
+
+        event(new BreadDataUpdated($dataType, $data));
+
+        if (auth()->user()->can('browse', app($dataType->model_name))) {
+            $redirect = redirect()->route("voyager.{$dataType->slug}.index");
+        } else {
+            $redirect = redirect()->back();
+        }
+
+        return $redirect->with([
+            'message'    => __('voyager::generic.successfully_updated')." {$dataType->getTranslatedAttribute('display_name_singular')}",
+            'alert-type' => 'success',
+        ]);
+    }
+
+
+
 }
